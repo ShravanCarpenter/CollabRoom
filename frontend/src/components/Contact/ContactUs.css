@@ -1,0 +1,116 @@
+body {
+    font-family: "Poppins", sans-serif;
+}
+
+.contact-us {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1rem;
+    background: #fff;
+    width: 100%;
+}
+
+/* Contact Form Section */
+.contact-form-section {
+    flex: 1;
+    max-width: 400px;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    margin: 3rem 2rem;
+}
+
+.contact-form-section h1 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.contact-form-section p {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form input,
+.contact-form textarea {
+    margin-bottom: 1rem;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.contact-form .submit-btn {
+    padding: 0.6rem 1rem;
+    margin: 0rem 5rem;
+    font-weight: 400;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-left-radius: 35px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.contact-form .submit-btn:hover {
+    background: yellow;
+    color: #000;
+}
+
+.follow-us h2 {
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.social-icons a img {
+    width: 30px;
+    margin: 0 1rem;
+    transition: transform 0.3s ease;
+}
+
+.social-icons a img:hover {
+    transform: scale(1.2);
+}
+
+
+/* Map Section */
+.map-section {
+    flex: 1;
+    max-width: 700px;
+    padding: 2rem;
+    margin: 1rem;
+}
+
+.map-section h2 {
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.map-section iframe {
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .contact-us {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contact-form-section,
+    .map-section {
+        max-width: 100%;
+    }
+}

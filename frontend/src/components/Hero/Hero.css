@@ -1,0 +1,126 @@
+.hero {
+  font-family: "Poppins", serif;
+  position: relative;
+  width: 100vw; /* Full width */
+  height: 100vh;
+  background: url('/Hero-bg.jpg') no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align content to the left */
+  color: #fff;
+  padding: 0 1rem;
+  overflow: hidden;
+}
+
+.glass-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.hero-content {
+  position: relative;
+  margin-left: -400px; /* Adds some space from the left edge */
+  animation: fadeIn 1.5s ease-in-out;
+  max-width: 50%; /* Restricts the width of the content to the left side */
+  text-align: left; /* Align text to the left */
+}
+
+.hero-content h1 {
+  color: #fff;
+  font-size: 3rem;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  color: #fff;
+  font-weight: 600;
+}
+
+.cta-btn {
+  display: inline-block;
+  text-decoration: none;
+  background: yellow;
+  color: black;
+  padding: 0.5rem 4rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom-left-radius: 35px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-btn:hover {
+  background: rgb(187, 187, 10);
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .hero-content {
+    margin-left: -100px;
+    text-align: left;
+  }
+
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-content h1 img {
+    width: 250px;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .cta-btn {
+    font-size: 0.9rem;
+    padding: 0.7rem 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content {
+    margin: 0 10px;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 0.9rem;
+  }
+
+  .cta-btn {
+    font-size: 0.8rem;
+    padding: 0.6rem 2.5rem;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

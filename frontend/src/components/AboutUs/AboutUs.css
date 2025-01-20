@@ -1,0 +1,84 @@
+.vision-mission {
+  font-family: "Poppins", sans-serif;
+  width: 100vw;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, #eceff1, #cfd8dc);
+}
+
+.page-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* Section Styling */
+.vision-section,
+.mission-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Card Styling */
+.vision-card,
+.mission-card {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  max-width: 400px;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vision-card h2,
+.mission-card h2 {
+  font-size: 1.8rem;
+  color: #0077cc;
+  margin-bottom: 1rem;
+}
+
+.vision-card p,
+.mission-card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.vision-card:hover,
+.mission-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Image Styling */
+.vision-image img,
+.mission-image img {
+  width: 300px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+
+  .vision-section,
+  .mission-section {
+    flex-direction: column;
+  }
+
+  .vision-image img,
+  .mission-image img {
+    width: 80%;
+  }
+
+  .vision-card,
+  .mission-card {
+    max-width: 90%;
+  }
+}
