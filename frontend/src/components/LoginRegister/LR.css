@@ -78,14 +78,12 @@ body {
     text-decoration: underline;
 }
 
-/* Error Message */
 .auth-container .error-message {
     color: #ff4d4d;
     font-size: 0.9rem;
     margin: 5px 0;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .auth-container {
         padding: 1.5rem;

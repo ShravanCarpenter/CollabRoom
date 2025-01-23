@@ -1,12 +1,12 @@
 .hero {
   font-family: "Poppins", serif;
   position: relative;
-  width: 100vw; /* Full width */
+  width: auto;
   height: 100vh;
   background: url('/Hero-bg.jpg') no-repeat center center/cover;
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Align content to the left */
+  justify-content: flex-start;
   color: #fff;
   padding: 0 1rem;
   overflow: hidden;
@@ -30,10 +30,10 @@
 
 .hero-content {
   position: relative;
-  margin-left: -400px; /* Adds some space from the left edge */
+  margin-left: -400px;
   animation: fadeIn 1.5s ease-in-out;
-  max-width: 50%; /* Restricts the width of the content to the left side */
-  text-align: left; /* Align text to the left */
+  max-width: 50%;
+  text-align: left;
 }
 
 .hero-content h1 {

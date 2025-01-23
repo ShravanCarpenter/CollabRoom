@@ -13,7 +13,7 @@ const Header = () => {
         <li><a href="#contact-us">Contact</a></li>
         
         <li><a href="/login" className="btn-1">LogIn</a></li>
-        <li><a href="/login" className="btn">SignUp For Free</a></li>
+        <li><a href="/register" className="btn">SignUp For Free</a></li>
       </ul>
 
       <div className="hamburger-menu" onClick={() => toggleMenu()}>

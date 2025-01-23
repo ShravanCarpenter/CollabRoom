@@ -1,10 +1,18 @@
 import React from 'react';
+import Sidebar from './Sidebar';
+import Navbar from './Navbar';
+import './Dashboard.css';
 
 const Dashboard = () => {
   return (
     <div className="dashboard-container">
-      <h2>Welcome to the Dashboard!</h2>
-      <p>This is your personal dashboard after logging in.</p>
+      <Sidebar />
+      <div className="dashboard-content">
+        <Navbar />
+        <div className="dashboard-main">
+          <h1>Welcome to the CollabRoom Dashboard...</h1>
+        </div>
+      </div>
     </div>
   );
 };

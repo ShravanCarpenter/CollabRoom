@@ -9,9 +9,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 1rem;
-  background: transparent; /* Set a solid white background */
+  background: transparent;
   backdrop-filter: blur(10px);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Keep shadow for slight elevation */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   transition: all 0.3s ease-in-out;
 }
@@ -19,7 +19,7 @@
 .navbar-logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: yellow; /* Adjust logo text color to contrast with white background */
+  color: yellow;
 }
 
 .navbar-links {
@@ -35,7 +35,7 @@
 
 .navbar-links a {
   text-decoration: none;
-  color: #000; /* Adjust link color to contrast with white background */
+  color: #000;
   font-size: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 25px;
@@ -46,12 +46,12 @@
 
 .navbar-links a:hover {
   color: #000;
-  background-color: yellow; /* Light hover effect for links */
+  background-color: yellow;
   transform: scale(1.05);
 }
 
 .navbar-links .btn-1 {
-  background: #fff; /* Solid black button for contrast */
+  background: #fff;
   color: #000;
   font-weight: 400;
   padding: 0.5rem 1.5rem;
@@ -59,7 +59,7 @@
 }
 
 .navbar-links .btn {
-  background: #000; /* Solid black button for contrast */
+  background: #000;
   color: #fff;
   font-weight: 400;
   padding: 0.5rem 1.5rem;
@@ -79,7 +79,6 @@
   transform: scale(1.1);
 }
 
-/* Hamburger Menu */
 .hamburger-menu {
   display: none;
   flex-direction: column;
@@ -91,11 +90,10 @@
 .hamburger-menu span {
   width: 25px;
   height: 3px;
-  background: #fff; /* Black color for the hamburger lines */
+  background: #fff;
   border-radius: 2px;
 }
 
-/* Media Queries for Responsiveness */
 @media (max-width: 1024px) {
   .navbar-links {
     gap: 1rem;
@@ -114,7 +112,7 @@
     right: 0;
     flex-direction: column;
     width: 200px;
-    background: transparent; /* White background for mobile dropdown */
+    background: transparent;
     backdrop-filter: blur(15px);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
     border-radius: 10px;

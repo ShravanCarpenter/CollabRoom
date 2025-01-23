@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaSpinner, FaEye, FaEyeSlash } from 'react-icons/fa';
-import './LoginRegister.css';
+import './LR.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({

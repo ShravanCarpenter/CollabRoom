@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Login from "./components/LoginRegister/Login";
 import Register from "./components/LoginRegister/Register";
-import ForgotPassword from "./components/LoginRegister/ForgotPassword";
 import Dashboard from "./components/Dashboard/Dashboard";
 import AboutUs from "./components/AboutUs/AboutUs";
 import Features from "./components/Features/Features";
@@ -31,14 +30,6 @@ function App() {
           element={
             <Layout>
               <Register />
-            </Layout>
-          }
-        />
-        <Route
-          path="/forgot-password"
-          element={
-            <Layout>
-              <ForgotPassword />
             </Layout>
           }
         />
