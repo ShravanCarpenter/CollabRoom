@@ -1,52 +1,68 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { IoMdLogOut, IoMdSettings } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
 import axios from 'axios';
 import './Dashboard.css';
 
 const Navbar = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [userData, setUserData] = useState({ name: '', mode: '', image: '' });
+    const [userData, setUserData] = useState({ name: '', mode: '' });
 
     useEffect(() => {
         const fetchUserData = async () => {
+            const token = localStorage.getItem('token');
+            console.log('Sending token:', token);
+            if (!token) {
+                console.error('Token is missing from localStorage.');
+                return;
+            }
+
             try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    console.error('No token found');
-                    return;
-                }
-
                 const response = await axios.get('http://localhost:3000/api/auth/profile', {
-                    headers: { Authorization: `Bearer ${token}` },
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 });
-
-                if (response.status === 200) {
-                    setUserData(response.data);
-                } else {
-                    console.error('Failed to fetch user data:', response.statusText);
-                }
+                console.log('Profile data:', response.data);
+                setUserData(response.data);
             } catch (error) {
-                console.error('Error fetching user data:', error.message);
+                if (error.response) {
+                    console.error('Error fetching user data:', error.response.data);  // Log response data
+                } else {
+                    console.error('Error fetching user data:', error.message);  // Log any other errors
+                }
             }
         };
 
         fetchUserData();
     }, []);
 
+    const getInitials = (name) => {
+        if (!name || typeof name !== 'string') return '?';
+
+        const nameParts = name.trim().split(' '); // Split the full name into parts
+        const initials = nameParts
+            .filter(part => part.length > 0)  // Remove empty parts
+            .map(part => part.charAt(0).toUpperCase()) // Get the first letter and capitalize it
+            .join('');
+
+        return initials || '?';
+    };
+
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
+    };
+
+    const navigate = useNavigate();
+
+    const handleProfile = () => {
+        navigate('/profile');
     };
 
     const handleLogout = () => {
         localStorage.removeItem('token');
         window.location.href = '/login';
-    };
-
-    const getInitials = (name) => {
-        if (!name || typeof name !== 'string') return '?';
-        return name
-            .split(' ')
-            .map((word) => word.charAt(0).toUpperCase())
-            .join('');
     };
 
     return (
@@ -57,23 +73,21 @@ const Navbar = () => {
 
             <div className="profile" onClick={toggleDropdown}>
                 <div className="profile-image">
-                    {userData.image ? (
-                        <img src={userData.image} alt="Profile" className="profile-pic" />
-                    ) : (
-                        <div className="profile-initials">{getInitials(userData.name)}</div>
-                    )}
+
+                    <div className="profile-initials">{getInitials(userData.name)}</div>
+
                 </div>
                 <div className="profile-info">
-                    <span>{userData.name || 'Guest'}</span>
-                    <small>{userData.mode || 'User'}</small>
+                    <span>{userData.name}</span>
+                    <small>{userData.mode.toUpperCase()}</small>
                 </div>
 
                 {dropdownOpen && (
                     <div className="dropdown-menu">
                         <ul>
-                            <li>Profile</li>
-                            <li>Settings</li>
-                            <li onClick={handleLogout}>Logout</li>
+                            <li onClick={handleProfile}><CgProfile />Profile</li>
+                            <li><IoMdSettings />Settings</li>
+                            <li onClick={handleLogout}><IoMdLogOut />Logout</li>
                         </ul>
                     </div>
                 )}

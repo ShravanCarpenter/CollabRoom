@@ -8,6 +8,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    mobile: '', // Add mobile field
     mode: 'student',
     password: '',
     confirmPassword: '',
@@ -17,8 +18,8 @@ const Register = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState(false);
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);  // Add state for password visibility
-  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);  // For confirm password
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -39,12 +40,13 @@ const Register = () => {
       const response = await axios.post('http://localhost:3000/api/auth/register', {
         name: formData.name,
         email: formData.email,
+        mobile: formData.mobile, // Include mobile number in the request
         mode: formData.mode,
         password: formData.password,
       });
       setSuccessMessage(response.data.message || 'Registration successful!');
       setErrorMessage('');
-      setFormData({ name: '', email: '', mode: 'student', password: '', confirmPassword: '' });
+      setFormData({ name: '', email: '', mobile: '', mode: 'student', password: '', confirmPassword: '' });
 
       // Redirect to login page after 2 seconds
       setTimeout(() => {
@@ -83,6 +85,14 @@ const Register = () => {
               onChange={handleChange}
               required
             />
+            <input
+              type="text"
+              name="mobile"
+              placeholder="Mobile Number"
+              value={formData.mobile}
+              onChange={handleChange}
+              required
+            />
             <select name="mode" value={formData.mode} onChange={handleChange} required>
               <option value="student">Student</option>
               <option value="educator">Educator</option>
@@ -98,10 +108,10 @@ const Register = () => {
               />
               <button
                 type="button"
-                onClick={() => setIsPasswordVisible(!isPasswordVisible)}  // Toggle password visibility
+                onClick={() => setIsPasswordVisible(!isPasswordVisible)} 
                 className="toggle-password"
               >
-                {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}  {/* Show/Hide Eye Icon */}
+                {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
             <div className="password-field">
@@ -115,13 +125,13 @@ const Register = () => {
               />
               <button
                 type="button"
-                onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}  // Toggle confirm password visibility
+                onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)} 
                 className="toggle-password"
               >
-                {isConfirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}  {/* Show/Hide Eye Icon */}
+                {isConfirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
-            <button className='submit-btn' type="submit" disabled={isLoading}>
+            <button className="submit-btn" type="submit" disabled={isLoading}>
               {isLoading ? <FaSpinner className="spinner-icon" /> : 'Register'}
             </button>
           </form>

@@ -1,15 +1,14 @@
 const express = require('express');
-const { registerUser, loginUser, forgetPassword, getProfile } = require('../controllers/authController');
+const { registerUser, loginUser, forgetPassword, getProfile, updateProfile} = require('../controllers/authController');
 const authMiddleware = require('../middleware/authMiddleware');
-const User = require('../models/User'); 
-const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 const router = express.Router();
 
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/forgot-password', forgetPassword);
 router.get('/profile', authMiddleware, getProfile);
-
+router.post('/update-profile', authMiddleware, updateProfile);
 
 const TokenBlacklist = require('../models/TokenBlacklist');
 
@@ -27,7 +26,5 @@ router.post('/logout', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
-
-
 
 module.exports = router;

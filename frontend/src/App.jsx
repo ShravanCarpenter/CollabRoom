@@ -10,6 +10,7 @@ import Hero from "./components/Hero/Hero";
 import ContactUs from "./components/Contact/ContactUs";
 import Layout from "./components/Layout/Layout";
 import Footer from "./components/Footer/Footer";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
 import "./App.css";
 
 function App() {
@@ -38,6 +39,14 @@ function App() {
           element={
             <Layout>
               <Dashboard />
+            </Layout>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Layout>
+              <ProfilePage />
             </Layout>
           }
         />
