@@ -1,0 +1,159 @@
+.profileContainer {
+    background: #ffffff;
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: left;
+    margin: 80px auto;
+}
+
+.profileContainer h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.initials {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #142b6f;
+    color: white;
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+form .form-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #142b6f;
+    margin-bottom: 10px;
+}
+
+form .form-control {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+}
+
+form .form-control:focus {
+    border-color: #007bff;
+}
+
+button[type="submit"] {
+    background-color: #142b6f;
+    color: #ffffff;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+    background: #011551;
+}
+
+/* Success & Error Messages */
+.success-message,
+.error-message {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-align: center;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.success-message {
+    color: green;
+    background: rgba(129, 255, 129, 0.1);
+}
+
+.error-message {
+    color: red;
+    background: rgba(255, 129, 129, 0.1);
+}
+
+.profileContainer p {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.profileContainer p a {
+    color: #797979;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.profileContainer p a:hover {
+    color: #5e5e5e;
+    text-decoration: none;
+}
+
+.links-bottom {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profileContainer {
+        padding: 1.5rem;
+    }
+
+    .profileContainer h1 {
+        font-size: 1.8rem;
+    }
+
+    form .form-control,
+    .profileContainer button {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .initials {
+        width: 80px;
+        height: 80px;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .profileContainer {
+        padding: 1rem;
+    }
+
+    form .form-control {
+        font-size: 0.9rem;
+    }
+
+    button[type="submit"] {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}

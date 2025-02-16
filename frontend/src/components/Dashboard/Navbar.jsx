@@ -41,10 +41,10 @@ const Navbar = () => {
     const getInitials = (name) => {
         if (!name || typeof name !== 'string') return '?';
 
-        const nameParts = name.trim().split(' '); // Split the full name into parts
+        const nameParts = name.trim().split(' '); 
         const initials = nameParts
-            .filter(part => part.length > 0)  // Remove empty parts
-            .map(part => part.charAt(0).toUpperCase()) // Get the first letter and capitalize it
+            .filter(part => part.length > 0)  
+            .map(part => part.charAt(0).toUpperCase())
             .join('');
 
         return initials || '?';

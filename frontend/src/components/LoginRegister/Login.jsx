@@ -9,28 +9,36 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState(false);
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);  // Add state for password visibility
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setErrorMessage('');
 
+    if (!emailRegex.test(formData.email)) {
+      setErrorMessage('❌ Please enter a valid email address.');
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const response = await axios.post('http://localhost:3000/api/auth/login', formData);
       localStorage.setItem('token', response.data.token);
-      setIsRedirecting(true);
 
+      setIsRedirecting(true);
       setTimeout(() => {
         navigate('/dashboard');
-      }, 2000); // Simulated delay before redirecting
+      }, 2000);
     } catch (error) {
-      setErrorMessage(error.response?.data?.error || 'Invalid credentials. Please try again.');
+      setErrorMessage(error.response?.data?.error || '❌ Invalid credentials. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -38,22 +46,26 @@ const Login = () => {
 
   return (
     <div className="auth-container login">
-      <h2>Login</h2>
       {isRedirecting ? (
-        <div className="loading-container">
+        <div className="redirecting-message">
           <FaSpinner className="loading-icon" />
+          <p>Redirecting...</p>
         </div>
       ) : (
         <>
+          <h2>Login</h2>
           <form onSubmit={handleLogin}>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
+            <div className="input-group">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
             <div className="password-field">
               <input
                 type={isPasswordVisible ? 'text' : 'password'}
@@ -65,22 +77,25 @@ const Login = () => {
               />
               <button
                 type="button"
-                onClick={() => setIsPasswordVisible(!isPasswordVisible)}  // Toggle password visibility
+                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                 className="toggle-password"
               >
-                {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}  {/* Show/Hide Eye Icon */}
+                {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
+
             <button className='submit-btn' type="submit" disabled={isLoading}>
               {isLoading ? <FaSpinner className="spinner-icon" /> : 'Login'}
             </button>
           </form>
+
           {errorMessage && <p className="error-message">{errorMessage}</p>}
+
           <p>
             Don't have an account? <a href="/register">Register here</a>
           </p>
           <p>
-            <a href="/">Go Back</a>
+            <a href="/" style={{ textDecoration: 'none' }}>Go Back</a>
           </p>
         </>
       )}

@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+
 import Header from "./components/Header/Header";
 import Login from "./components/LoginRegister/Login";
 import Register from "./components/LoginRegister/Register";
@@ -10,12 +12,14 @@ import Hero from "./components/Hero/Hero";
 import ContactUs from "./components/Contact/ContactUs";
 import Layout from "./components/Layout/Layout";
 import Footer from "./components/Footer/Footer";
-import ProfilePage from "./components/ProfilePage/ProfilePage";
+import ProfileUpdate from "./components/ProfilePage/ProfileUpdate";
+import UpdatePassword from "./components/ProfilePage/UpdatePassword";
 import "./App.css";
 
 function App() {
 
   return (
+
     <Router>
       <Routes>
         <Route
@@ -46,7 +50,15 @@ function App() {
           path="/profile"
           element={
             <Layout>
-              <ProfilePage />
+              <ProfileUpdate />
+            </Layout>
+          }
+        />
+        <Route
+          path="/update-password"
+          element={
+            <Layout>
+              <UpdatePassword />
             </Layout>
           }
         />
@@ -65,6 +77,7 @@ function App() {
         />
       </Routes>
     </Router>
+
   );
 }
 

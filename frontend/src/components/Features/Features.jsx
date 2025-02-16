@@ -8,6 +8,11 @@ const Features = () => {
                 <h2>Key Features of CollabRoom</h2>
                 <div className="features-list">
                     <div className="feature-item">
+                        <img src="/edit.gif" alt="Real Time Document Editing" />
+                        <h3>Real Time Document Editing</h3>
+                        <p>Create and edit documents with your fellow mates anywhere in real time.</p>
+                    </div>
+                    <div className="feature-item">
                         <img src="/studyRoom.gif" alt="Study Room" />
                         <h3>Study Rooms</h3>
                         <p>Create and join virtual study rooms for focused learning sessions.</p>
