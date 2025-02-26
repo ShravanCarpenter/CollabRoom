@@ -252,9 +252,6 @@ const JoinMeeting = () => {
             <div id="meeting-container" style={{ width: '100%', height: '100' }}>
                 {/* ZegoCloud will render the video interface here */}
             </div>
-            <p>
-                <a href="/dashboard" style={{ textDecoration: 'none', color: '#333', fontSize: '1.2rem', fontWeight: '500', marginLeft: '45%', marginBottom: '20px' }}>Back to Dashboard</a>
-            </p>
         </div>
     );
 };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from 'react-router-dom';
 import { FaSpinner, FaEye, FaEyeSlash } from "react-icons/fa";
+import logo from '../../../public/CollabRoom logo.png';
 import "./LR.css";
 
 const Register = () => {
@@ -31,7 +32,7 @@ const Register = () => {
     const length = password.length;
 
     const strength = [hasUpperCase, hasLowerCase, hasNumbers, hasSpecialChar]
-        .filter(Boolean).length;
+      .filter(Boolean).length;
 
     if (length < 8) return 'weak';
     if (strength <= 2) return 'weak';
@@ -91,7 +92,7 @@ const Register = () => {
       const response = await axios.post("http://localhost:3000/api/auth/register", formData);
       setIsSuccess(true);
       document.body.style.background = 'rgb(255, 255, 255)';
-      
+
       setTimeout(() => {
         navigate("/login");
       }, 2000);
@@ -108,6 +109,7 @@ const Register = () => {
 
   return (
     <>
+      <img src={logo} alt="logo" className="logo" style={{ height: '40px', marginTop: '20px', marginLeft: '44%' }} />
       {isSuccess ? (
         <div className="success-container">
           <FaSpinner className="spinner-icon" />
@@ -119,43 +121,43 @@ const Register = () => {
 
           <form onSubmit={handleRegister}>
             <div className="input-group">
-              <input 
-                type="text" 
-                name="name" 
-                placeholder="Full Name" 
-                value={formData.name} 
-                onChange={handleChange} 
-                required 
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={formData.name}
+                onChange={handleChange}
+                required
               />
             </div>
 
             <div className="input-group">
-              <input 
-                type="email" 
-                name="email" 
-                placeholder="Email" 
-                value={formData.email} 
-                onChange={handleChange} 
-                required 
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
               />
             </div>
 
             <div className="input-group">
-              <input 
-                type="text" 
-                name="mobile" 
-                placeholder="Mobile Number" 
-                value={formData.mobile} 
-                onChange={handleChange} 
-                required 
+              <input
+                type="text"
+                name="mobile"
+                placeholder="Mobile Number"
+                value={formData.mobile}
+                onChange={handleChange}
+                required
               />
             </div>
 
             <div className="input-group">
-              <select 
-                name="mode" 
-                value={formData.mode} 
-                onChange={handleChange} 
+              <select
+                name="mode"
+                value={formData.mode}
+                onChange={handleChange}
                 required
               >
                 <option value="student">Student</option>
@@ -164,17 +166,17 @@ const Register = () => {
             </div>
 
             <div className="password-field">
-              <input 
-                type={isPasswordVisible ? "text" : "password"} 
-                name="password" 
-                placeholder="Password" 
-                value={formData.password} 
-                onChange={handleChange} 
-                required 
+              <input
+                type={isPasswordVisible ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
               />
-              <button 
-                type="button" 
-                onClick={() => setIsPasswordVisible(!isPasswordVisible)} 
+              <button
+                type="button"
+                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
                 className="toggle-password"
               >
                 {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
@@ -187,17 +189,17 @@ const Register = () => {
             </div>
 
             <div className="password-field">
-              <input 
-                type={isConfirmPasswordVisible ? "text" : "password"} 
-                name="confirmPassword" 
-                placeholder="Confirm Password" 
-                value={formData.confirmPassword} 
-                onChange={handleChange} 
-                required 
+              <input
+                type={isConfirmPasswordVisible ? "text" : "password"}
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
               />
-              <button 
-                type="button" 
-                onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)} 
+              <button
+                type="button"
+                onClick={() => setIsConfirmPasswordVisible(!isConfirmPasswordVisible)}
                 className="toggle-password"
               >
                 {isConfirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
@@ -210,8 +212,8 @@ const Register = () => {
           </form>
 
           {errorMessage && (
-            <p className="error-message" style={{ 
-              padding: '10px', 
+            <p className="error-message" style={{
+              padding: '10px',
               marginTop: '10px',
               backgroundColor: 'rgba(255, 0, 0, 0.1)',
               borderRadius: '5px'
@@ -224,7 +226,7 @@ const Register = () => {
             Already have an account? <Link to="/login">Sign In</Link>
           </p>
           <p>
-            <button 
+            <button
               onClick={handleBackToHome}
               style={{
                 background: 'none',

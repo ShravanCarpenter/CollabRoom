@@ -24,6 +24,8 @@ const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 const meetingRoutes = require('./routes/meetingRoutes');
 app.use('/api/meetings', meetingRoutes);
+const taskRoutes = require('./routes/taskRoutes');
+app.use('/api/tasks', taskRoutes);
 
 app.get('/', (req, res) => {
   res.send('CollabRoom Database is running...');

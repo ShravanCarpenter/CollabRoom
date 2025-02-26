@@ -9,45 +9,45 @@
 .features h2 {
     font-size: 2rem;
     margin-bottom: 3rem;
-    color: #333;
+    color: #000;
 }
 
 .features .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
 .features-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+    gap: 3rem;
     padding: 0 1rem;
 }
 
 .feature-item {
     background-color: #fff;
-    padding: 2rem;
+    padding: 2rem 1rem;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
     transition: transform 0.3s ease;
 }
 
 .feature-item img {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     margin-bottom: 1rem;
 }
 
 .feature-item h3 {
     font-size: 1.5rem;
-    color: #333;
+    color: #000;
     margin-bottom: 1rem;
 }
 
 .feature-item p {
-    color: #777;
-    font-size: 1rem;
+    color: #595959;
+    font-size: 14px;
 }
 
 .feature-item:hover {

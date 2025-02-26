@@ -18,24 +18,25 @@ body {
     padding: 2rem;
     background: #fff;
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     margin: 3rem 2rem;
 }
 
 .contact-form-section h1 {
-    color: #333;
+    color: #000;
     margin-top: 0;
     margin-bottom: 1rem;
 }
 
 .contact-form-section p {
-    color: #666;
+    color: #595959;
     margin-bottom: 1rem;
 }
 
 .contact-form {
     display: flex;
     flex-direction: column;
+    max-width: 500px;
 }
 
 .contact-form input,
@@ -47,17 +48,30 @@ body {
     font-size: 1rem;
 }
 
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: #595959;
+    font-size: 14px;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #001e80;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.1);
+}
+
 .contact-form .submit-btn {
     padding: 0.6rem 1rem;
-    margin: 0rem 5rem;
+    margin: 0rem;
     font-weight: 400;
-    background: #000;
+    background: #001e80;
     color: #fff;
     border: none;
     border-radius: 25px;
     border-top-right-radius: 25px;
     border-bottom-left-radius: 35px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     cursor: pointer;
     transition: background 0.3s ease, color 0.3s ease;
 }
@@ -68,7 +82,12 @@ body {
 }
 
 .follow-us h2 {
-    color: #333;
+    color: #000;
+    margin: 2rem 0;
+}
+
+.social-icons {
+    display: flex;
     margin-bottom: 2rem;
 }
 
@@ -80,6 +99,7 @@ body {
 
 .social-icons a img:hover {
     transform: scale(1.2);
+    color: #001e80;
 }
 
 .map-section {
@@ -90,13 +110,13 @@ body {
 }
 
 .map-section h2 {
-    color: #333;
+    color: #000;
     margin-bottom: 2rem;
 }
 
 .map-section iframe {
     border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 768px) {

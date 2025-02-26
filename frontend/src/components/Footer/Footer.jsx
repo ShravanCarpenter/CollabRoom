@@ -1,12 +1,15 @@
 import React from 'react';
-import './Footer.css'; // Assuming the CSS file is in the same directory
+import './Footer.css';
+import logo from '../../../public/CollabRoom Logo.png';
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-left">
-          <img src="/logo.png" alt="CollabRoom Logo" className="footer-logo" />
+          <div className="footer-logo-container">
+            <img src={logo} alt="CollabRoom Logo" className="footer-logo" />
+          </div>
           <p className="footer-description">
             Empowering collaboration and learning through innovation and technology. Join us today!
           </p>

@@ -33,17 +33,17 @@ const CreateMeeting = () => {
                 if (!token) {
                     throw new Error('Authentication required');
                 }
-                
-                    const response = await fetch(`http://localhost:3000/api/auth/profile`, {
+
+                const response = await fetch(`http://localhost:3000/api/auth/profile`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
-                
+
                 if (!response.ok) {
                     throw new Error('Failed to load user profile');
                 }
-                
+
                 const data = await response.json();
                 setUserData({
                     name: data.name || 'Guest',
@@ -65,7 +65,7 @@ const CreateMeeting = () => {
         try {
             console.log('Fetching meeting details for ID:', meetingId);
             const token = localStorage.getItem('token');
-            
+
             if (!token) {
                 throw new Error('Authentication required');
             }
@@ -123,29 +123,29 @@ const CreateMeeting = () => {
         const initMeeting = async () => {
             // Wait for all data to be ready
             if (
-                zpRef.current || 
-                isLoadingUser || 
-                isLoadingMeeting || 
-                !userData.name || 
+                zpRef.current ||
+                isLoadingUser ||
+                isLoadingMeeting ||
+                !userData.name ||
                 !meetingDetails
             ) {
                 return;
             }
-            
+
             try {
                 // Check if env variables exist
                 const appIDValue = import.meta.env.VITE_ZEGO_APP_ID;
                 const serverSecretValue = import.meta.env.VITE_ZEGO_SERVER_SECRET;
-                
+
                 if (!appIDValue || !serverSecretValue) {
                     throw new Error('ZEGOCLOUD credentials missing. Please check your environment variables.');
                 }
-                
+
                 const appID = parseInt(appIDValue);
                 if (isNaN(appID)) {
                     throw new Error('Invalid ZEGOCLOUD App ID: must be a number');
                 }
-                
+
                 // Create the kit token
                 const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
                     appID,
@@ -154,20 +154,20 @@ const CreateMeeting = () => {
                     Date.now().toString(),
                     userData.name
                 );
-        
+
                 // Create Zego instance
                 const zc = ZegoUIKitPrebuilt.create(kitToken);
                 if (!zc) {
                     throw new Error('Failed to create Zego instance');
                 }
                 zpRef.current = zc;
-        
+
                 // Wait for container
                 const container = document.getElementById('meeting-container');
                 if (!container) {
                     throw new Error('Meeting container element not found');
                 }
-        
+
                 // Join room
                 await zc.joinRoom({
                     container: container,
@@ -183,7 +183,7 @@ const CreateMeeting = () => {
                     },
                     showScreenSharingButton: true
                 });
-        
+
             } catch (error) {
                 console.error('Failed to initialize meeting:', error);
                 setError(error.message);
@@ -230,8 +230,8 @@ const CreateMeeting = () => {
             <div className="error-container">
                 <h2>Error</h2>
                 <p>{error}</p>
-                <button 
-                    onClick={() => navigate('/')}
+                <button
+                    onClick={() => navigate('/dashboard')}
                     className="return-button"
                 >
                     Return to Home
@@ -252,10 +252,7 @@ const CreateMeeting = () => {
             <div id="meeting-container" style={{ width: '100%', height: '100' }}>
                 {/* ZegoCloud will render the video interface here */}
             </div>
-            <p>
-                <a href="/dashboard" style={{ textDecoration: 'none', color: '#333', fontSize: '1.2rem', fontWeight: '500', marginLeft: '45%', marginBottom: '20px' }}>Back to Dashboard</a>
-            </p>
-            
+
         </div>
     );
 };

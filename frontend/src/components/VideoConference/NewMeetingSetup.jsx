@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './VideoConference.css';
+import logo from '../../../public/CollabRoom logo.png';
 
 const NewMeetingSetup = () => {
     const navigate = useNavigate();
@@ -14,21 +15,21 @@ const NewMeetingSetup = () => {
         scheduleDateTime: ''
     });
     const [showModal, setShowModal] = useState(false);
-    
+
     // Generate unique meeting ID
     const generateMeetingId = () => {
         // Get current timestamp in milliseconds
         const timestamp = Date.now();
-        
+
         // Convert timestamp to base36 and take last 4 characters
         const timeComponent = timestamp.toString(36).slice(-4);
-        
+
         // Generate 4 random characters
         const randomComponent = Math.random().toString(36).substring(2, 6);
-        
+
         // Combine and ensure exactly 8 characters
         const meetingId = (timeComponent + randomComponent).slice(0, 8);
-        
+
         console.log('Generated meeting ID:', meetingId);
         return meetingId;
     };
@@ -69,11 +70,11 @@ const NewMeetingSetup = () => {
     const createMeetingRecord = async () => {
         try {
             console.log('Starting meeting creation...');
-            
+
             // Generate a new meeting ID for this attempt
             const newMeetingId = generateMeetingId();
             setMeetingId(newMeetingId);
-            
+
             if (!newMeetingId || !formData.meetingName || !userData.name || !userData.email) {
                 console.error('Validation failed:', { newMeetingId, formData, userData });
                 throw new Error('Missing required fields in frontend validation');
@@ -102,7 +103,7 @@ const NewMeetingSetup = () => {
             });
 
             const responseData = await response.json();
-            
+
             if (!response.ok) {
                 throw new Error(responseData.message || 'Meeting creation failed');
             }
@@ -135,90 +136,99 @@ const NewMeetingSetup = () => {
             console.error('Submission failed:', err);
             alert(err.message || 'Failed to create meeting. Please try again.');
         }
-    };    
+    };
 
     return (
-        <div className="meeting-setup-container">
-            <div className="user-info-section">
-                <h3>Welcome, {userData.name}!</h3>
-                <p className="user-email">{userData.email}</p>
-            </div>
-            
-            <form onSubmit={handleSubmission} className="meeting-setup-form">
-                <h2>Create New Meeting</h2>
-                
-                <div className="form-group">
-                    <label>Meeting Name</label>
-                    <input
-                        type="text"
-                        name="meetingName"
-                        value={formData.meetingName}
-                        onChange={handleChange}
-                        required
-                    />
+        <>
+            <img src={logo} alt="logo" className="logo" style={{ height: '40px', marginTop: '20px', marginLeft: '43%' }} />
+            <div className="meeting-setup-container">
+                <div className="user-info-section">
+                    <h3>Welcome, {userData.name}!</h3>
+                    <p className="user-email">{userData.email}</p>
                 </div>
 
-                <div className="form-group">
-                    <label>Meeting Type</label>
-                    <div className="radio-group">
-                        <label>
-                            <input
-                                type="radio"
-                                name="meetingType"
-                                value="instant"
-                                checked={formData.meetingType === 'instant'}
-                                onChange={handleChange}
-                            />
-                            Instant Meeting
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="meetingType"
-                                value="scheduled"
-                                checked={formData.meetingType === 'scheduled'}
-                                onChange={handleChange}
-                            />
-                            Schedule for Later
-                        </label>
-                    </div>
-                </div>
+                <form onSubmit={handleSubmission} className="meeting-setup-form">
+                    <h2>Create New Meeting</h2>
 
-                {formData.meetingType === 'scheduled' && (
                     <div className="form-group">
-                        <label>Schedule Date & Time</label>
+                        <label>Meeting Name</label>
                         <input
-                            type="datetime-local"
-                            name="scheduleDateTime"
-                            value={formData.scheduleDateTime}
+                            type="text"
+                            name="meetingName"
+                            placeholder='Enter Meeting Name'
+                            value={formData.meetingName}
                             onChange={handleChange}
                             required
                         />
                     </div>
-                )}
 
-                <button type="submit" className="submit-btn">
-                    {formData.meetingType === 'instant' ? 'Create Meeting' : 'Schedule Meeting'}
-                </button>
-            </form>
-
-            {showModal && (
-                <div className="scheduled-modal">
-                    <div className="modal-content">
-                        <h3>Meeting Scheduled</h3>
-                        <p><strong>ID:</strong> {meetingId}</p>
-                        <p><strong>Name:</strong> {formData.meetingName}</p>
-                        <p><strong>Date:</strong> {new Date(formData.scheduleDateTime).toLocaleString()}</p>
-                        <button 
-                            onClick={() => setShowModal(false)}
-                            className="close-btn"
-                        >
-                            Close
-                        </button>
+                    <div className="form-group">
+                        <label>Meeting Type</label>
+                        <div className="radio-group">
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="meetingType"
+                                    value="instant"
+                                    checked={formData.meetingType === 'instant'}
+                                    onChange={handleChange}
+                                />
+                                Instant Meeting
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="meetingType"
+                                    value="scheduled"
+                                    checked={formData.meetingType === 'scheduled'}
+                                    onChange={handleChange}
+                                />
+                                Schedule for Later
+                            </label>
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
+
+                    {formData.meetingType === 'scheduled' && (
+                        <div className="form-group">
+                            <label>Schedule Date & Time</label>
+                            <input
+                                type="datetime-local"
+                                name="scheduleDateTime"
+                                value={formData.scheduleDateTime}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                    )}
+
+                    <button type="submit" className="submit-btn">
+                        {formData.meetingType === 'instant' ? 'Create Meeting' : 'Schedule Meeting'}
+                    </button>
+                </form>
+
+                {showModal && (
+                    <div className="scheduled-modal">
+                        <div className="modal-content">
+                            <h3>Meeting Scheduled</h3>
+                            <p><strong>ID:</strong> {meetingId}</p>
+                            <p><strong>Name:</strong> {formData.meetingName}</p>
+                            <p><strong>Date:</strong> {new Date(formData.scheduleDateTime).toLocaleString()}</p>
+                            <button
+                                onClick={() => setShowModal(false)}
+                                className="close-btn"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                )}
+                <p>
+                    <a href='/dashboard' style={{color: '#001e80', textDecoration: 'none', fontSize: '14px', marginTop: '10px', marginLeft: '150px'}}>
+                        Back to Dashboard
+                    </a>
+                </p>
+            </div>
+        </>
     );
 };
 

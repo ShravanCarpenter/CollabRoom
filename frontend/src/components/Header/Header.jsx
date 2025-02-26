@@ -1,10 +1,11 @@
 import React from 'react';
+import logo from '../../../public/CollabRoom logo.png';
 import "../Header/Header.css";
 
 const Header = () => {
   return (
     <nav className="navbar-part">
-      <img className="navbar-logo" src='/logo.png' alt='logo' width={200}/>
+      <img className="navbar-logo" src={logo} alt='logo' width={160}/>
 
       <ul className="navbar-links">
         <li><a href="#hero">Home</a></li>

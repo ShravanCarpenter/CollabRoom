@@ -27,11 +27,6 @@ const Features = () => {
                         <h3>Video Conferencing</h3>
                         <p>Host virtual study sessions with real-time video and face-to-face interaction.</p>
                     </div>
-                    <div className="feature-item">
-                        <img src="/documentSharing.gif" alt="Document Sharing" />
-                        <h3>Document Sharing</h3>
-                        <p>Upload and share study materials and resources with ease.</p>
-                    </div>
                 </div>
             </div>
         </section>

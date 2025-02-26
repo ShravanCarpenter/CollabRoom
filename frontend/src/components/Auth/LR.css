@@ -25,7 +25,7 @@
 .auth-container h2 {
     font-size: 28px;
     margin-bottom: 25px;
-    color: #2c3e50;
+    color: #000;
     font-weight: 600;
 }
 
@@ -55,6 +55,7 @@
 .input-group input:focus,
 .password-field input:focus,
 .auth-container select:focus {
+    outline: none;
     border-color: #3498db;
     box-shadow: 0 0 10px rgba(52, 152, 219, 0.1);
 }
@@ -97,7 +98,7 @@
 
 /* Submit Button */
 .submit-btn {
-    background: linear-gradient(135deg, #3498db, #2980b9);
+    background: #001e80;
     width: 100%;
     color: white;
     border: none;
@@ -108,7 +109,7 @@
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin: 20px 0;
+    margin: 0 0 20px 0;
 }
 
 .submit-btn:hover {
@@ -228,7 +229,7 @@
 
 .password-field {
     position: relative;
-    margin-bottom: 1rem;
+    margin-bottom: 12px;
 }
 
 .toggle-password {

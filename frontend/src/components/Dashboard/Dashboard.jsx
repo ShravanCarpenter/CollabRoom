@@ -6,6 +6,7 @@ import { CgProfile } from "react-icons/cg";
 import { BiHome, BiBookAlt, BiEdit, BiVideo, BiChat, BiCog, BiCalendar } from "react-icons/bi";
 import { RxLink2 } from "react-icons/rx";
 import './Dashboard.css';
+import TaskManagement from '../TaskManagement/TaskManagement';
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -19,14 +20,23 @@ const Dashboard = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const profileDropdownRef = useRef(null);
 
+    const searchData = [
+        { name: 'Home', path: '/' },
+        { name: 'Study Room', path: '/study-room' },
+        { name: 'Document Editing', path: '/document-editing' },
+        { name: 'Video Conferencing', path: '/video-conferencing' },
+        { name: 'Chat', path: '/chat' },
+        { name: 'Settings', path: '/settings' }
+    ];
+
     useEffect(() => {
         fetchUserData();
     }, []);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
-                setDropdownOpen(false); 
+            if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
+                setFilteredResults([]);
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
@@ -98,9 +108,9 @@ const Dashboard = () => {
 
     const getInitials = (name) => {
         if (!name || typeof name !== 'string') return '?';
-        const nameParts = name.trim().split(' '); 
+        const nameParts = name.trim().split(' ');
         const initials = nameParts
-            .filter(part => part.length > 0)  
+            .filter(part => part.length > 0)
             .map(part => part.charAt(0).toUpperCase())
             .join('');
         return initials || '?';
@@ -111,13 +121,14 @@ const Dashboard = () => {
             {/* Navbar */}
             <div className="dash-navbar">
                 <div className="logo">
-                    <img src="/logo.png" alt="Logo" />
+                    <img src="/CollabRoom logo.png" alt="Logo" />
                 </div>
 
                 <div className="nav-profile">
-                    <div 
+                    <div
                         className="profile-trigger"
                         onClick={() => setDropdownOpen(!dropdownOpen)}
+                        ref={profileDropdownRef}
                     >
                         <div className="profile-circle">
                             {getInitials(userData.name)}
@@ -160,8 +171,9 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            {/* Sidebar */}
-            <div className={`dashboard-content ${isSidebarOpen ? 'open' : ''}`}>
+            {/* Main Layout with Sidebar and Content Areas */}
+            <div className={`dashboard-layout ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+                {/* Sidebar */}
                 <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
                     {sidebarItems.map((item) => (
                         <div
@@ -176,30 +188,47 @@ const Dashboard = () => {
                 </div>
 
                 {/* Main Content Area */}
-                <div className="main-content">
-                    <h1>{activeTab}</h1>
-                    {activeTab === 'Dashboard'}
-                    {activeTab === 'Video Conferencing' && (
-                        <div className="video-conference-section">
-                            <div className="options-container">
-                                <div className="option-card" onClick={() => navigate('/create-meeting')}>
-                                    <BiVideo size={48} />
-                                    <h2>Create New Meeting</h2>
-                                    <p>Start a new video conference</p>
+                <div className="content-wrapper">
+                    <div className="main-content">
+                        {activeTab === 'Home' && (
+                            <div className="home-section">
+                                <div className="home-section-content">
+                                    <h2>Welcome to the CollabRoom, {userData.name}...</h2>
+                                    {/* Main content goes here */}
+                                    <div className="dashboard-info">
+                                        <p>This is your personal workspace. Navigate through different sections using the sidebar.</p>
+                                    </div>
                                 </div>
-                                <div className="option-card" onClick={() => navigate('/join-meeting')}>
-                                    <RxLink2 size={48} />
-                                    <h2>Join via Link</h2>
-                                    <p>Join using a meeting link</p>
-                                </div>
-                                <div className="option-card" onClick={() => navigate('/my-meetings')}>
-                                    <BiCalendar size={48} />
-                                    <h2>My Meetings</h2>
-                                    <p>View your scheduled and past meetings</p>
+                                {/* Task Management Panel - Fixed on right side */}
+                                <div className="task-management-panel">
+                                    <TaskManagement />
                                 </div>
                             </div>
-                        </div>
-                    )}
+                        )}
+
+                        {activeTab === 'Video Conferencing' && (
+                            <div className="video-conference-section">
+                                <h2 style={{ textAlign: 'center', marginTop: '10px', marginBottom: '50px', fontSize: '30px', fontWeight: 'bold' }}>Video Conference</h2>
+                                <div className="options-container">
+                                    <div className="option-card" onClick={() => navigate('/create-meeting')}>
+                                        <BiVideo size={38} color='white'/>
+                                        <h2>Create New Meeting</h2>
+                                        <p>Start a new video conference</p>
+                                    </div>
+                                    <div className="option-card" onClick={() => navigate('/join-meeting')}>
+                                        <RxLink2 size={38} color='white'/>
+                                        <h2>Join via Link</h2>
+                                        <p>Join using a meeting link</p>
+                                    </div>
+                                    <div className="option-card" onClick={() => navigate('/my-meetings')}>
+                                        <BiCalendar size={38} color='white'/>
+                                        <h2>My Meetings</h2>
+                                        <p>View your scheduled and past meetings</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

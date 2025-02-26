@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaSpinner, FaEye, FaEyeSlash } from 'react-icons/fa';
+import logo from '../../../public/CollabRoom logo.png';
 import './LR.css';
 
 const Login = () => {
@@ -40,13 +41,13 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:3000/api/auth/login', formData);
       const { token } = response.data;
-      
+
       // Store token and user data
       localStorage.setItem('token', token);
-      
+
       setIsSuccess(true);
       document.body.style.background = 'rgb(255, 255, 255)';
-      
+
       setTimeout(() => {
         navigate('/dashboard');
       }, 2000);
@@ -63,6 +64,7 @@ const Login = () => {
 
   return (
     <>
+      <img src={logo} alt="logo" className="logo" style={{ height: '40px', marginTop: '20px', marginLeft: '44%' }} />
       {isSuccess ? (
         <div className="success-container">
           <FaSpinner className="spinner-icon" />
@@ -112,7 +114,7 @@ const Login = () => {
             Don't have an account? <Link to="/register">Create Account</Link>
           </p>
           <p>
-            <button 
+            <button
               onClick={handleBackToHome}
               style={{
                 background: 'none',

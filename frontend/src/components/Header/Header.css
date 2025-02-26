@@ -8,17 +8,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 1rem;
-  background: transparent;
+  background: #fff;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   transition: all 0.3s ease-in-out;
-}
-
-.navbar-logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: yellow;
 }
 
 .navbar-links {
@@ -72,10 +66,16 @@
   transform: scale(1.1);
 }
 
-.navbar-links .btn-1:hover {
+.navbar-links .btn-1 {
   background: yellow;
-  font-weight: 500;
+  color: #000;
+  font-weight: 600;
   transform: scale(1.1);
+}
+
+.navbar-links .btn-1:hover {
+  background: #001e80;
+  color: #fff;
 }
 
 .hamburger-menu {
