@@ -3,7 +3,7 @@ import "../Header/Header.css";
 
 const Header = () => {
   return (
-    <nav className="navbar">
+    <nav className="navbar-part">
       <img className="navbar-logo" src='/logo.png' alt='logo' width={200}/>
 
       <ul className="navbar-links">

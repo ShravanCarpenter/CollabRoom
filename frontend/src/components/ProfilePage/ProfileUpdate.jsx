@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form, Button, Spinner } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import { Edit2, User, Mail, Lock, ArrowLeft } from 'react-feather';
 import "./ProfileUpdate.css";
 
 const ProfileUpdate = () => {
     const [user, setUser] = useState({ name: "", email: "" });
     const [message, setMessage] = useState({ type: "", text: "" });
     const [isLoading, setIsLoading] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -49,6 +51,7 @@ const ProfileUpdate = () => {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setMessage({ type: "success", text: "Profile updated successfully!" });
+            setIsEditing(false);
         } catch {
             setMessage({ type: "error", text: "Failed to update profile." });
         } finally {
@@ -58,32 +61,83 @@ const ProfileUpdate = () => {
 
     return (
         <div className="profileContainer">
-            <h1>Profile</h1>
-            <div className="initials">{getInitials(user.name)}</div>
+            <div className="profile-header">
+                <h1>Profile Settings</h1>
+                <button 
+                    className="edit-toggle"
+                    onClick={() => setIsEditing(!isEditing)}
+                >
+                    <Edit2 size={20} />
+                </button>
+            </div>
 
-            {message.text && <div className={`${message.type}-message`}>{message.text}</div>}
+            <div className="profile-avatar">
+                <div className="initials">{getInitials(user.name)}</div>
+                {isEditing && <div className="avatar-overlay">
+                    <Edit2 size={24} />
+                </div>}
+            </div>
 
-            <Form onSubmit={handleSubmit}>
-                {["name", "email"].map((field) => (
-                    <Form.Group key={field}>
-                        <Form.Label>{field.charAt(0).toUpperCase() + field.slice(1)}</Form.Label>
-                        <Form.Control 
-                            type={field} 
-                            name={field} 
-                            value={user[field]} 
-                            onChange={handleChange} 
-                            required 
-                        />
-                    </Form.Group>
-                ))}
+            {message.text && (
+                <div className={`message-banner ${message.type}`}>
+                    {message.text}
+                </div>
+            )}
 
-                <Button type="submit" disabled={isLoading}>
-                    {isLoading ? <Spinner animation="border" size="sm" /> : "Update Profile"}
-                </Button>
+            <Form onSubmit={handleSubmit} className={isEditing ? 'editing' : ''}>
+                <div className="form-group">
+                    <div className="input-icon">
+                        <User size={20} />
+                    </div>
+                    <Form.Control 
+                        type="text"
+                        name="name"
+                        value={user.name}
+                        onChange={handleChange}
+                        disabled={!isEditing}
+                        placeholder="Your Name"
+                        required
+                    />
+                </div>
 
-                <div className="links-bottom">
-                    <p><a href="/update-password">Change Password</a></p>
-                    <p><a href="/dashboard">Go Back</a></p>
+                <div className="form-group">
+                    <div className="input-icon">
+                        <Mail size={20} />
+                    </div>
+                    <Form.Control 
+                        type="email"
+                        name="email"
+                        value={user.email}
+                        onChange={handleChange}
+                        disabled={!isEditing}
+                        placeholder="Your Email"
+                        required
+                    />
+                </div>
+
+                {isEditing && (
+                    <button 
+                        type="submit" 
+                        className={`submit-button ${isLoading ? 'loading' : ''}`}
+                        disabled={isLoading}
+                    >
+                        {isLoading ? (
+                            <div className="loader"></div>
+                        ) : (
+                            'Save Changes'
+                        )}
+                    </button>
+                )}
+
+                <div className="profile-actions">
+                    <a href="/update-password" className="action-link">
+                        <Lock size={18} />
+                        Change Password
+                    </a>
+                    <a href="/dashboard" className="action-link">
+                        <ArrowLeft size={18} />
+                        Back to Dashboard
+                    </a>
                 </div>
             </Form>
         </div>

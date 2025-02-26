@@ -1,10 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Provider } from "react-redux";
+import { Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header/Header";
-import Login from "./components/LoginRegister/Login";
-import Register from "./components/LoginRegister/Register";
+import Login from "./components/Auth/Login";
+import Register from "./components/Auth/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
 import AboutUs from "./components/AboutUs/AboutUs";
 import Features from "./components/Features/Features";
@@ -14,71 +13,64 @@ import Layout from "./components/Layout/Layout";
 import Footer from "./components/Footer/Footer";
 import ProfileUpdate from "./components/ProfilePage/ProfileUpdate";
 import UpdatePassword from "./components/ProfilePage/UpdatePassword";
+import CreateMeeting from './components/VideoConference/CreateMeeting';
+import JoinMeeting from './components/VideoConference/JoinMeeting';
+import MyMeetings from './components/VideoConference/MyMeetings';
+import NewMeetingSetup from './components/VideoConference/NewMeetingSetup';
+import JoinMeetingSetup from './components/VideoConference/JoinMeetingSetup';
+import ProtectedRoute from './components/ProtectedRoute/';
+
 import "./App.css";
 
 function App() {
-
-  return (
-
-    <Router>
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <Layout>
-              <Login />
-            </Layout>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <Layout>
-              <Register />
-            </Layout>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <Layout>
-              <Dashboard />
-            </Layout>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <Layout>
-              <ProfileUpdate />
-            </Layout>
-          }
-        />
-        <Route
-          path="/update-password"
-          element={
-            <Layout>
-              <UpdatePassword />
-            </Layout>
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <Layout>
-              <Header />
-              <Hero />
-              <Features />
-              <AboutUs />
-              <ContactUs />
-              <Footer />
-            </Layout>
-          }
-        />
-      </Routes>
-    </Router>
-
-  );
+    return (
+        <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route
+                path="/dashboard"
+                element={
+                    <ProtectedRoute>
+                        <Dashboard />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/profile/update"
+                element={
+                    <ProtectedRoute>
+                        <ProfileUpdate />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/update-password"
+                element={
+                    <ProtectedRoute>
+                        <UpdatePassword />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/"
+                element={
+                    <Layout>
+                        <Header />
+                        <Hero />
+                        <Features />
+                        <AboutUs />
+                        <ContactUs />
+                        <Footer />
+                    </Layout>
+                }
+            />
+            <Route path="/create-meeting" element={<NewMeetingSetup />} />
+            <Route path="/create-meeting/:meetingId" element={<CreateMeeting />} />
+            <Route path="/join-meeting" element={<JoinMeetingSetup />} />
+            <Route path="/join-meeting/:meetingId" element={<JoinMeeting />} />
+            <Route path="/my-meetings" element={<MyMeetings />} />
+        </Routes>
+    );
 }
 
 export default App;

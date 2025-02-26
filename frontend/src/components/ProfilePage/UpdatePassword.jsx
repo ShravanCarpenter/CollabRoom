@@ -1,173 +1,193 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
+import { Form } from "react-bootstrap";
+import { Lock, Eye, EyeOff, ArrowLeft, Shield } from 'react-feather';
 import "./UpdatePassword.css";
 
-const UpdatePassword = () => {
-    const [formData, setFormData] = useState({
+const PasswordChange = () => {
+    const [passwordData, setPasswordData] = useState({
         currentPassword: "",
         newPassword: "",
         confirmNewPassword: "",
     });
-
-    const [isPasswordVisible, setIsPasswordVisible] = useState({
+    const [showPasswords, setShowPasswords] = useState({
         current: false,
         new: false,
-        confirm: false,
+        confirm: false
     });
-
-    const [errorMessage, setErrorMessage] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
+    const [message, setMessage] = useState({ type: "", text: "" });
     const [isLoading, setIsLoading] = useState(false);
-    const [passwordStrength, setPasswordStrength] = useState("");
 
-    const handleChange = (e) => {
+    const getPasswordStrength = (password) => {
+        if (!password) return '';
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumbers = /\d/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        const length = password.length;
+
+        const strength = [hasUpperCase, hasLowerCase, hasNumbers, hasSpecialChar]
+            .filter(Boolean).length;
+
+        if (length < 8) return 'weak';
+        if (strength <= 2) return 'weak';
+        if (strength === 3) return 'medium';
+        return 'strong';
+    };
+
+    const handlePasswordChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-
-        if (name === "newPassword") {
-            checkPasswordStrength(value);
-        }
-
-        setErrorMessage("");
+        setPasswordData({ ...passwordData, [name]: value });
     };
 
-    // Toggle password visibility
-    const togglePasswordVisibility = (field) => {
-        setIsPasswordVisible((prevState) => ({
-            ...prevState,
-            [field]: !prevState[field],
-        }));
-    };
-
-    // Password strength checker
-    const checkPasswordStrength = (password) => {
-        const lengthRequirement = password.length >= 8;
-        const uppercaseRequirement = /[A-Z]/.test(password);
-        const lowercaseRequirement = /[a-z]/.test(password);
-        const numberRequirement = /\d/.test(password);
-        const specialCharRequirement = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-
-        const passedChecks =
-            lengthRequirement +
-            uppercaseRequirement +
-            lowercaseRequirement +
-            numberRequirement +
-            specialCharRequirement;
-
-        if (passedChecks === 5) {
-            setPasswordStrength("Strong");
-        } else if (passedChecks >= 3) {
-            setPasswordStrength("Medium");
-        } else {
-            setPasswordStrength("Weak");
-        }
-    };
-
-    const handleSubmit = async (e) => {
+    const handlePasswordSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        setErrorMessage("");
-        setSuccessMessage("");
+        setMessage({ type: "", text: "" });
 
-        const { currentPassword, newPassword, confirmNewPassword } = formData;
-        if (newPassword !== confirmNewPassword) {
-            setErrorMessage("❌ Passwords do not match.");
+        if (passwordData.newPassword !== passwordData.confirmNewPassword) {
+            setMessage({ type: "error", text: "Passwords do not match." });
             setIsLoading(false);
             return;
         }
 
-        if (passwordStrength !== "Strong") {
-            setErrorMessage("❌ Password is not strong enough.");
+        if (getPasswordStrength(passwordData.newPassword) === 'weak') {
+            setMessage({ type: "error", text: "Please choose a stronger password." });
             setIsLoading(false);
             return;
         }
 
         try {
-            const response = await axios.post("http://localhost:3000/api/auth/update-password", {
-                currentPassword,
-                newPassword,
+            const token = localStorage.getItem("token");
+            await axios.put("http://localhost:3000/api/auth/update-password", passwordData, {
+                headers: { Authorization: `Bearer ${token}` },
             });
-
-            setSuccessMessage(response.data.message || "✅ Password updated successfully!");
-            setFormData({ currentPassword: "", newPassword: "", confirmNewPassword: "" });
-            setPasswordStrength(""); // Reset password strength
+            setMessage({ type: "success", text: "Password updated successfully!" });
+            setPasswordData({
+                currentPassword: "",
+                newPassword: "",
+                confirmNewPassword: "",
+            });
         } catch (error) {
-            setErrorMessage(error.response?.data?.error || "❌ An error occurred. Try again.");
+            setMessage({ 
+                type: "error", 
+                text: error.response?.data?.message || "Failed to update password." 
+            });
         } finally {
             setIsLoading(false);
         }
     };
 
+    const togglePasswordVisibility = (field) => {
+        setShowPasswords(prev => ({
+            ...prev,
+            [field]: !prev[field]
+        }));
+    };
+
     return (
-        <div className="update-password-container">
-            <h2>Update Password</h2>
+        <div className="password-update-container">
+            <div className="password-update-header">
+                <h1>Change Password</h1>
+                <Shield size={24} className="shield-icon" />
+            </div>
 
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-            {successMessage && <p className="success-message">{successMessage}</p>}
+            {message.text && (
+                <div className={`message-banner ${message.type}`}>
+                    {message.text}
+                </div>
+            )}
 
-            <form onSubmit={handleSubmit}>
-                {/* Current Password */}
-                <div className="password-field">
-                    <input
-                        type={isPasswordVisible.current ? "text" : "password"}
+            <Form onSubmit={handlePasswordSubmit}>
+                <div className="form-group">
+                    <div className="input-icon">
+                        <Lock size={20} />
+                    </div>
+                    <Form.Control
+                        type={showPasswords.current ? "text" : "password"}
                         name="currentPassword"
+                        value={passwordData.currentPassword}
+                        onChange={handlePasswordChange}
                         placeholder="Current Password"
-                        value={formData.currentPassword}
-                        onChange={handleChange}
                         required
                     />
-                    <button type="button" onClick={() => togglePasswordVisibility("current")} className="toggle-password">
-                        {isPasswordVisible.current ? <FaEyeSlash /> : <FaEye />}
+                    <button
+                        type="button"
+                        className="toggle-password"
+                        onClick={() => togglePasswordVisibility('current')}
+                    >
+                        {showPasswords.current ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
                 </div>
 
-                {/* Password Strength Indicator */}
-                <div className={`password-strength ${passwordStrength.toLowerCase()}`}>
-                    Password Strength: {passwordStrength}
-                </div>
-
-                {/* New Password */}
-                <div className="password-field">
-                    <input
-                        type={isPasswordVisible.new ? "text" : "password"}
+                <div className="form-group">
+                    <div className="input-icon">
+                        <Lock size={20} />
+                    </div>
+                    <Form.Control
+                        type={showPasswords.new ? "text" : "password"}
                         name="newPassword"
+                        value={passwordData.newPassword}
+                        onChange={handlePasswordChange}
                         placeholder="New Password"
-                        value={formData.newPassword}
-                        onChange={handleChange}
                         required
-                        className={`password-input ${passwordStrength.toLowerCase()}`}
                     />
-                    <button type="button" onClick={() => togglePasswordVisibility("new")} className="toggle-password">
-                        {isPasswordVisible.new ? <FaEyeSlash /> : <FaEye />}
+                    <button
+                        type="button"
+                        className="toggle-password"
+                        onClick={() => togglePasswordVisibility('new')}
+                    >
+                        {showPasswords.new ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
+                    {passwordData.newPassword && (
+                        <div className={`password-strength ${getPasswordStrength(passwordData.newPassword)}`}>
+                            Password Strength: {getPasswordStrength(passwordData.newPassword)}
+                        </div>
+                    )}
                 </div>
 
-                {/* Confirm New Password */}
-                <div className="password-field">
-                    <input
-                        type={isPasswordVisible.confirm ? "text" : "password"}
+                <div className="form-group">
+                    <div className="input-icon">
+                        <Lock size={20} />
+                    </div>
+                    <Form.Control
+                        type={showPasswords.confirm ? "text" : "password"}
                         name="confirmNewPassword"
+                        value={passwordData.confirmNewPassword}
+                        onChange={handlePasswordChange}
                         placeholder="Confirm New Password"
-                        value={formData.confirmNewPassword}
-                        onChange={handleChange}
                         required
                     />
-                    <button type="button" onClick={() => togglePasswordVisibility("confirm")} className="toggle-password">
-                        {isPasswordVisible.confirm ? <FaEyeSlash /> : <FaEye />}
+                    <button
+                        type="button"
+                        className="toggle-password"
+                        onClick={() => togglePasswordVisibility('confirm')}
+                    >
+                        {showPasswords.confirm ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
                 </div>
 
-                {/* Submit Button */}
-                <button className="submit-btn" type="submit" disabled={isLoading}>
-                    {isLoading ? <FaSpinner className="spinner-icon" /> : "Update Password"}
+                <button 
+                    type="submit" 
+                    className={`submit-button ${isLoading ? 'loading' : ''}`}
+                    disabled={isLoading}
+                >
+                    {isLoading ? (
+                        <div className="loader"></div>
+                    ) : (
+                        'Update Password'
+                    )}
                 </button>
-                <p>
-                    <a href="/dashboard" style={{textDecoration: "none"}}>Go Back</a>
-                </p>
-            </form>
+
+                <div className="back-link">
+                    <a href="/profile/update" className="action-link">
+                        <ArrowLeft size={18} />
+                        Back to Profile
+                    </a>
+                </div>
+            </Form>
         </div>
     );
 };
 
-export default UpdatePassword;
+export default PasswordChange;

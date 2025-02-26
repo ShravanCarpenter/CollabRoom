@@ -1,10 +1,9 @@
-.navbar {
+.navbar-part {
   font-family: "Poppins", serif;
   position: fixed;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 98%;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -139,7 +138,7 @@
 }
 
 @media (max-width: 480px) {
-  .navbar {
+  .navbar-part {
     padding: 0.5rem 1rem;
   }
 

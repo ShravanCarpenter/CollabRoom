@@ -1,0 +1,290 @@
+.my-meetings-container {
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.tab {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.tab.active {
+    border-bottom: 2px solid #2563eb;
+    color: #2563eb;
+}
+
+.meetings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.meeting-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.meeting-card h3 {
+    margin-bottom: 10px;
+}
+
+.meeting-card p {
+    margin-bottom: 3px;
+    align-items: left;
+    justify-content: left;
+    text-align: left;
+}
+
+.join-button,
+.join-link,
+.close-button {
+    display: inline-block;
+    padding: 5px 20px;
+    background-color: #2563eb;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 10px;
+    margin-left: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.status-badge.ongoing {
+    background-color: #22c55e;
+    color: white;
+}
+
+.status-badge.scheduled {
+    background-color: #f59e0b;
+    color: white;
+}
+
+.status-badge.completed {
+    background-color: #6b7280;
+    color: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.loading,
+.error-message,
+.no-meetings {
+    text-align: center;
+    padding: 20px;
+    color: #6b7280;
+}
+
+/* Section Layout */
+.meeting-section {
+    margin-bottom: 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.meeting-section h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #333;
+}
+
+/* Adjust the grid for better spacing */
+.meetings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+
+/* Make the header more prominent */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.header-container h1 {
+    margin: 0;
+    color: #2c3e50;
+}
+
+/* Enhance the back button */
+.back-button {
+    padding: 8px 16px;
+    background-color: #f8f9fa;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.back-button:hover {
+    background-color: #e9ecef;
+}
+
+/* Action Buttons */
+.meeting-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.update-button,
+.close-button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.update-button {
+    background-color: #f0ad4e;
+    border: 1px solid #eea236;
+    color: white;
+}
+
+.close-button {
+    background-color: #d9534f;
+    border: 1px solid #d43f3a;
+    color: white;
+}
+
+/* Small button variants for table view */
+.update-button-small,
+.close-button-small {
+    padding: 4px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin-left: 5px;
+}
+
+.update-button-small {
+    background-color: #f0ad4e;
+    border: 1px solid #eea236;
+    color: white;
+}
+
+.close-button-small {
+    background-color: #d9534f;
+    border: 1px solid #d43f3a;
+    color: white;
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.update-modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.save-button,
+.cancel-button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.save-button {
+    background-color: #5cb85c;
+    border: 1px solid #4cae4c;
+    color: white;
+}
+
+.cancel-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}

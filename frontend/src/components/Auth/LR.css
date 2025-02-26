@@ -1,0 +1,244 @@
+.auth-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 40px 40px 20px 40px;
+    background: rgb(255, 255, 255);
+    border-radius: 20px;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo-container img {
+    width: 120px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.auth-container h2 {
+    font-size: 28px;
+    margin-bottom: 25px;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.auth-container p {
+    font-size: 15px;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group input,
+.password-field input,
+.auth-container select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.input-group input:focus,
+.password-field input:focus,
+.auth-container select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.1);
+}
+
+/* Messages */
+.success-message {
+    color: green;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Password Field */
+.password-field {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #95a5a6;
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: #3498db;
+}
+
+/* Submit Button */
+.submit-btn {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    width: 100%;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 20px 0;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(135deg, #2980b9, #3498db);
+    transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+}
+
+.auth-container a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.auth-container a:hover {
+    color: #2980b9;
+}
+
+.redirecting-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    color: #000;
+}
+
+.loading-icon {
+    font-size: 2rem;
+    color: #3498db;
+}
+
+/* Responsive Design */
+@media (max-width: 450px) {
+    .auth-container {
+        max-width: 90%;
+        padding: 20px;
+    }
+
+    .email-verify-container {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .verify-btn {
+        width: 100%;
+    }
+
+    .submit-btn {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spinner-icon {
+    animation: spin 1s linear infinite;
+}
+
+.success-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    z-index: 1000;
+}
+
+.success-container .spinner-icon {
+    font-size: 3rem;
+    color: #3498db;
+    animation: spin 1s linear infinite;
+}
+
+.success-container p {
+    color: #ffffff;
+    font-size: 1.2rem;
+    margin: 0;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Add these styles to your existing LR.css */
+.password-strength {
+    margin-top: 8px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    text-align: left;
+}
+
+.password-strength.weak {
+    color: #dc2626;
+    background-color: #fee2e2;
+}
+
+.password-strength.medium {
+    color: #b45309;
+    background-color: #fef3c7;
+}
+
+.password-strength.strong {
+    color: #059669;
+    background-color: #d1fae5;
+}
+
+.password-field {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    padding: 5px;
+}
