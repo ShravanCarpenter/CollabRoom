@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { IoMdLogOut, IoMdSettings } from "react-icons/io";
+import { IoMdLogOut, IoMdSettings, IoMdMenu } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { BiHome, BiBookAlt, BiEdit, BiVideo, BiChat, BiCog, BiCalendar } from "react-icons/bi";
 import { RxLink2 } from "react-icons/rx";
 import './Dashboard.css';
 import TaskManagement from '../TaskManagement/TaskManagement';
+import Whiteboard from '../StudyRoom/Whiteboard';
+import JoinCreateRoom from '../StudyRoom/JoinCreateRoom';
+import { v4 as uuidv4 } from 'uuid';
 
 const Dashboard = () => {
     const navigate = useNavigate();
@@ -17,17 +20,13 @@ const Dashboard = () => {
         mode: '',
         email: ''
     });
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const profileDropdownRef = useRef(null);
-
-    const searchData = [
-        { name: 'Home', path: '/' },
-        { name: 'Study Room', path: '/study-room' },
-        { name: 'Document Editing', path: '/document-editing' },
-        { name: 'Video Conferencing', path: '/video-conferencing' },
-        { name: 'Chat', path: '/chat' },
-        { name: 'Settings', path: '/settings' }
-    ];
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [user, setUser] = useState(null);
+    const [roomJoined, setRoomJoined] = useState(false);
+    
+    const dropdownRef = useRef(null);
 
     useEffect(() => {
         fetchUserData();
@@ -127,11 +126,11 @@ const Dashboard = () => {
                 <div className="nav-profile">
                     <div
                         className="profile-trigger"
-                        onClick={() => setDropdownOpen(!dropdownOpen)}
-                        ref={profileDropdownRef}
+                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        ref={dropdownRef}
                     >
                         <div className="profile-circle">
-                            {getInitials(userData.name)}
+                            {userData.name?.charAt(0) || '?'}
                         </div>
                         <div className="profile-details">
                             <div className="profile-name">{userData.name || 'Guest'}</div>
@@ -139,11 +138,11 @@ const Dashboard = () => {
                         </div>
                     </div>
 
-                    {dropdownOpen && (
+                    {isDropdownOpen && (
                         <div className="profile-dropdown">
                             <div className="profile-header">
                                 <div className="profile-circle large">
-                                    {getInitials(userData.name)}
+                                    {userData.name?.charAt(0) || '?'}
                                 </div>
                                 <div className="profile-info">
                                     <div className="info-name">{userData.name}</div>
@@ -172,9 +171,9 @@ const Dashboard = () => {
             </div>
 
             {/* Main Layout with Sidebar and Content Areas */}
-            <div className={`dashboard-layout ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+            <div className={`dashboard-layout ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
                 {/* Sidebar */}
-                <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+                <div className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
                     {sidebarItems.map((item) => (
                         <div
                             key={item.name}
@@ -206,22 +205,30 @@ const Dashboard = () => {
                             </div>
                         )}
 
+                        {activeTab === 'Study Room' && (
+                            <div className="study-room-section" style={{ textAlign: 'center', marginTop: '100px' }}>
+                                <h2>Study Room</h2>
+                                <p style={{ marginBottom: '20px', fontSize: '18px' }}>Join a study room or create your own.</p>
+                                <button onClick={() => navigate('/study-room')} style={{padding: '10px 20px', fontSize: '14px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Let's Start</button>
+                            </div>
+                        )}
+
                         {activeTab === 'Video Conferencing' && (
                             <div className="video-conference-section">
                                 <h2 style={{ textAlign: 'center', marginTop: '10px', marginBottom: '50px', fontSize: '30px', fontWeight: 'bold' }}>Video Conference</h2>
                                 <div className="options-container">
                                     <div className="option-card" onClick={() => navigate('/create-meeting')}>
-                                        <BiVideo size={38} color='white'/>
+                                        <BiVideo size={38} color='white' />
                                         <h2>Create New Meeting</h2>
                                         <p>Start a new video conference</p>
                                     </div>
                                     <div className="option-card" onClick={() => navigate('/join-meeting')}>
-                                        <RxLink2 size={38} color='white'/>
+                                        <RxLink2 size={38} color='white' />
                                         <h2>Join via Link</h2>
                                         <p>Join using a meeting link</p>
                                     </div>
                                     <div className="option-card" onClick={() => navigate('/my-meetings')}>
-                                        <BiCalendar size={38} color='white'/>
+                                        <BiCalendar size={38} color='white' />
                                         <h2>My Meetings</h2>
                                         <p>View your scheduled and past meetings</p>
                                     </div>

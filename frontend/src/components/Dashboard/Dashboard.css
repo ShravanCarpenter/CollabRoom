@@ -7,21 +7,33 @@
 
 .dash-navbar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     height: 64px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    margin-right: auto;
 }
 
 .logo img {
-    height: 40px;
+    height: 100%;
+    object-fit: contain;
 }
 
 .nav-profile {
     position: relative;
+    margin-left: auto;
 }
 
 .profile-trigger {
@@ -157,6 +169,7 @@
 /* Sidebar */
 .sidebar {
     width: 250px;
+    margin-top: 64px;
     background-color: #fff;
     border-right: 1px solid #e5e7eb;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
@@ -198,6 +211,7 @@
     display: flex;
     flex: 1;
     overflow: hidden;
+    margin-top: 64px;
 }
 
 .main-content {
@@ -299,5 +313,271 @@
 
     .sidebar.open {
         width: 200px;
+    }
+}
+
+/* Study Room Section */
+.study-room-section {
+    padding: 20px;
+    min-height: calc(100vh - 64px);
+    margin-top: 64px;
+}
+
+.study-room-section h2 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.study-form-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 0 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.study-form-section {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.study-form-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.study-form-section h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: white;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: white;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.room-id-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.room-id-group input {
+    flex: 1;
+}
+
+.room-id-group button {
+    padding: 0.75rem;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.room-id-group button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.submit-button {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.submit-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Active whiteboard styles */
+.active-whiteboard {
+    display: flex;
+    height: calc(100vh - 180px);
+    background: #f8fafc;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .study-form-container {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+    }
+    
+    .study-room-section {
+        padding: 10px;
+    }
+}
+
+/* Match Video Conference section styles */
+.options-container, .study-form-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 0 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.option-card, .study-form-section {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.option-card:hover, .study-form-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 8px;
+    margin-right: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.sidebar-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar Transitions */
+.sidebar {
+    position: fixed;
+    left: 0;
+    height: calc(100vh - 64px); /* Adjust based on your navbar height */
+    background-color: white;
+    transition: width 0.3s ease, transform 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-x: hidden;
+    z-index: 1000;
+}
+
+.sidebar.open {
+    width: 240px;
+}
+
+.sidebar.closed {
+    width: 64px;
+}
+
+/* Sidebar Items */
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sidebar-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-item .icon {
+    min-width: 24px;
+    margin-right: 16px;
+}
+
+.sidebar-item .text {
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.sidebar.closed .text {
+    opacity: 0;
+}
+
+/* Content Adjustment */
+.dashboard-layout {
+    display: flex;
+    transition: margin-left 0.3s ease;
+}
+
+.dashboard-layout.sidebar-open {
+    margin-left: 240px;
+}
+
+.dashboard-layout.sidebar-closed {
+    margin-left: 64px;
+}
+
+.content-wrapper {
+    flex: 1;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .sidebar.closed {
+        transform: translateX(-100%);
+    }
+    
+    .dashboard-layout.sidebar-closed {
+        margin-left: 0;
+    }
+    
+    .sidebar-toggle {
+        display: flex;
     }
 }

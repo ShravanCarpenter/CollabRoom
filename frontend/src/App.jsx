@@ -20,55 +20,68 @@ import NewMeetingSetup from './components/VideoConference/NewMeetingSetup';
 import JoinMeetingSetup from './components/VideoConference/JoinMeetingSetup';
 import ProtectedRoute from './components/ProtectedRoute/';
 
+import Whiteboard from "./components/StudyRoom/Whiteboard";
+
 import "./App.css";
 
 function App() {
     return (
-        <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route
-                path="/dashboard"
-                element={
-                    <ProtectedRoute>
-                        <Dashboard />
-                    </ProtectedRoute>
-                }
-            />
-            <Route
-                path="/profile/update"
-                element={
-                    <ProtectedRoute>
-                        <ProfileUpdate />
-                    </ProtectedRoute>
-                }
-            />
-            <Route
-                path="/update-password"
-                element={
-                    <ProtectedRoute>
-                        <UpdatePassword />
-                    </ProtectedRoute>
-                }
-            />
-            <Route
-                path="/"
-                element={
-                    <Layout>
-                        <Header />
-                        <Hero />
-                        <Features />
-                        <AboutUs />
-                        <ContactUs />
-                        <Footer />
-                    </Layout>
-                }
-            />
-            <Route path="/create-meeting" element={<NewMeetingSetup />} />
-            <Route path="/create-meeting/:meetingId" element={<CreateMeeting />} />
-            <Route path="/join-meeting" element={<JoinMeetingSetup />} />
-            <Route path="/join-meeting/:meetingId" element={<JoinMeeting />} />
-            <Route path="/my-meetings" element={<MyMeetings />} />
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route
+                    path="/dashboard"
+                    element={
+                        <ProtectedRoute>
+                            <Dashboard />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/whiteboard"
+                    element={
+                        <ProtectedRoute>
+                            <Whiteboard />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/profile/update"
+                    element={
+                        <ProtectedRoute>
+                            <ProfileUpdate />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/update-password"
+                    element={
+                        <ProtectedRoute>
+                            <UpdatePassword />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/"
+                    element={
+                        <Layout>
+                            <Header />
+                            <Hero />
+                            <Features />
+                            <AboutUs />
+                            <ContactUs />
+                            <Footer />
+                        </Layout>
+                    }
+                />
+
+                <Route path="/create-meeting" element={<NewMeetingSetup />} />
+                <Route path="/create-meeting/:meetingId" element={<CreateMeeting />} />
+                <Route path="/join-meeting" element={<JoinMeetingSetup />} />
+                <Route path="/join-meeting/:meetingId" element={<JoinMeeting />} />
+                <Route path="/my-meetings" element={<MyMeetings />} />
+
+                <Route path="/study-room" element={<Whiteboard />} />
         </Routes>
     );
 }
