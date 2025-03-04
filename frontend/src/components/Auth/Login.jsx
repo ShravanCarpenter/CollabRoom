@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaSpinner, FaEye, FaEyeSlash } from 'react-icons/fa';
-import logo from '../../../public/CollabRoom logo.png';
+import { useAuth } from '../../context/AuthContext';
+import logo from '../../assets/CollabRoom logo.png';
 import './LR.css';
 
 const Login = () => {
@@ -12,17 +13,18 @@ const Login = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate = useNavigate();
+  const { auth, login } = useAuth();
 
-  // Check for existing token on component mount
+  // Check for existing auth on component mount
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
+    if (auth?.token) {
       navigate('/dashboard');
     }
-  }, [navigate]);
+  }, [auth, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrorMessage(''); // Clear error when user types
   };
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,17 +35,17 @@ const Login = () => {
     setErrorMessage('');
 
     if (!emailRegex.test(formData.email)) {
-      setErrorMessage('❌ Please enter a valid email address.');
+      setErrorMessage('Please enter a valid email address.');
       setIsLoading(false);
       return;
     }
 
     try {
       const response = await axios.post('http://localhost:3000/api/auth/login', formData);
-      const { token } = response.data;
+      const { token, user } = response.data;
 
-      // Store token and user data
-      localStorage.setItem('token', token);
+      // Use the login function from auth context
+      login(token, user);
 
       setIsSuccess(true);
       document.body.style.background = 'rgb(255, 255, 255)';
@@ -53,7 +55,7 @@ const Login = () => {
       }, 2000);
     } catch (error) {
       console.error('Login Error:', error);
-      setErrorMessage(error.response?.data?.error || '❌ Invalid credentials. Please try again.');
+      setErrorMessage(error.response?.data?.error || 'Invalid credentials. Please try again.');
       setIsLoading(false);
     }
   };
@@ -103,7 +105,7 @@ const Login = () => {
               </button>
             </div>
 
-            <button className='submit-btn' type="submit" disabled={isLoading}>
+            <button className='login-submit-btn' type="submit" disabled={isLoading}>
               {isLoading ? <FaSpinner className="spinner-icon" /> : 'Sign In'}
             </button>
           </form>

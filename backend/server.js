@@ -7,22 +7,30 @@ const connectDB = require('./config/db');
 const { userJoin, getUsers, userLeave } = require("./utils/user");
 const socketIO = require("socket.io");
 
+// Load environment variables first
 dotenv.config();
+
+// Validate essential environment variables
+if (!process.env.MONGODB_URI) {
+    console.error('MONGODB_URI is not defined in environment variables');
+    process.exit(1);
+}
+
+// Connect to MongoDB
 connectDB();
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server, {
     cors: {
-        origin: "http://localhost:5173",
-        methods: ["GET", "POST"],
-        credentials: true
+        origin: ["http://localhost:5173"],
+        methods: ["GET", "POST"]
     }
 });
 
 // Middleware
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ["http://localhost:5173"],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -37,41 +45,94 @@ const meetingRoutes = require('./routes/meetingRoutes');
 app.use('/api/meetings', meetingRoutes);
 const taskRoutes = require('./routes/taskRoutes');
 app.use('/api/tasks', taskRoutes);
+const chatRoutes = require('./routes/chatRoutes');
+app.use('/api/chat', chatRoutes);
 
-// Socket.io
-let imageUrl, userRoom;
-io.on("connection", (socket) => {
-    socket.on("user-joined", (data) => {
-        const { roomId, userId, userName, host, presenter } = data;
-        userRoom = roomId;
-        const user = userJoin(socket.id, userName, roomId, host, presenter);
-        const roomUsers = getUsers(user.room);
-        socket.join(user.room);
-        socket.emit("message", {
-            message: "Welcome to ChatRoom",
-        });
-        socket.broadcast.to(user.room).emit("message", {
-            message: `${user.username} has joined`,
-        });
+// Track users in rooms
+const userRooms = new Map(); // Map to track which rooms a socket is in
 
-        io.to(user.room).emit("users", roomUsers);
-        io.to(user.room).emit("canvasImage", imageUrl);
+io.on('connection', (socket) => {
+    console.log('A user connected:', socket.id);
+
+    // Handle joining a room with userId
+    socket.on('joinRoom', (data) => {
+        // Handle both old format (string) and new format (object)
+        let roomId, userId;
+
+        if (typeof data === 'object') {
+            roomId = data.roomId;
+            userId = data.userId;
+            console.log(`User ${userId} (Socket ${socket.id}) joined room: ${roomId}`);
+        } else {
+            roomId = data;
+            console.log(`Socket ${socket.id} joined room: ${roomId} (legacy format)`);
+        }
+
+        // Join the room
+        socket.join(roomId);
+
+        // Track this socket's room for later use
+        if (!userRooms.has(socket.id)) {
+            userRooms.set(socket.id, new Set());
+        }
+        userRooms.get(socket.id).add(roomId);
     });
 
-    socket.on("drawing", (data) => {
-        imageUrl = data;
-        socket.broadcast.to(userRoom).emit("canvasImage", imageUrl);
+    // Handle leaving a room
+    socket.on('leaveRoom', (data) => {
+        // Handle both old format (string) and new format (object)
+        let roomId;
+
+        if (typeof data === 'object') {
+            roomId = data.roomId;
+            const userId = data.userId;
+            console.log(`User ${userId} (Socket ${socket.id}) left room: ${roomId}`);
+        } else {
+            roomId = data;
+            console.log(`Socket ${socket.id} left room: ${roomId} (legacy format)`);
+        }
+
+        // Leave the room
+        socket.leave(roomId);
+
+        // Update tracking
+        if (userRooms.has(socket.id)) {
+            userRooms.get(socket.id).delete(roomId);
+        }
     });
 
-    socket.on("disconnect", () => {
-        const userLeaves = userLeave(socket.id);
-        const roomUsers = getUsers(userRoom);
+    // Handle sending messages
+    socket.on('sendMessage', (message) => {
+        console.log('Received message:', message);
 
-        if (userLeaves) {
-            io.to(userLeaves.room).emit("message", {
-                message: `${userLeaves.username} left the chat`,
+        // Ensure message is valid
+        if (!message || !message.roomId) {
+            console.error('Invalid message format:', message);
+            return;
+        }
+
+        // Make sure senderId is preserved
+        if (!message.senderId) {
+            console.warn('Message missing senderId:', message);
+        }
+
+        // Broadcast to everyone in the room including sender
+        io.to(message.roomId).emit('receiveMessage', message);
+        console.log(`Message broadcasted to room ${message.roomId}`);
+    });
+
+    // Handle disconnection
+    socket.on('disconnect', () => {
+        console.log('A user disconnected:', socket.id);
+
+        // Leave all rooms this socket was in
+        if (userRooms.has(socket.id)) {
+            const rooms = userRooms.get(socket.id);
+            rooms.forEach(roomId => {
+                socket.leave(roomId);
+                console.log(`Socket ${socket.id} left room ${roomId} due to disconnect`);
             });
-            io.to(userLeaves.room).emit("users", roomUsers);
+            userRooms.delete(socket.id);
         }
     });
 });

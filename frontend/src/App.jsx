@@ -21,7 +21,9 @@ import JoinMeetingSetup from './components/VideoConference/JoinMeetingSetup';
 import ProtectedRoute from './components/ProtectedRoute/';
 
 import Whiteboard from "./components/StudyRoom/Whiteboard";
-
+import ChatPage from "./components/ChatRoom/ChatPage";
+import CreateRoom from "./components/ChatRoom/CreateRoom";
+import JoinRoom from "./components/ChatRoom/JoinRoom";
 import "./App.css";
 
 function App() {
@@ -82,7 +84,11 @@ function App() {
                 <Route path="/my-meetings" element={<MyMeetings />} />
 
                 <Route path="/study-room" element={<Whiteboard />} />
-        </Routes>
+                <Route path="/create-room" element={<CreateRoom />} />
+                <Route path="/join-room" element={<JoinRoom />} />
+
+                <Route path="/chat/:roomId" element={<ChatPage />} />
+            </Routes>
     );
 }
 

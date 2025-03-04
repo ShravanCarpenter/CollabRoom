@@ -1,6 +1,6 @@
 import React from "react";
 import "../Hero/Hero.css";
-import logo from '../../../public/CollabRoom logo.png';
+
 const Hero = () => {
   return (
     <section id="hero" className="hero">
@@ -11,7 +11,7 @@ const Hero = () => {
           <p>
           Connect with peers in virtual study groups to make learning interactive and collaborative. Share resources, chat in real-time, and work together seamlessly. Access everything you need to succeed, anytime and anywhere.
           </p>
-          <a href="/signup" className="cta-btn">Get Started</a>
+          <a href="/register" className="cta-btn">Get Started</a>
         </div>
       </div>
     </section>

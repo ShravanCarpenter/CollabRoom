@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from 'react-router-dom';
 import { FaSpinner, FaEye, FaEyeSlash } from "react-icons/fa";
-import logo from '../../../public/CollabRoom logo.png';
+import logo from '../../assets/CollabRoom logo.png';
 import "./LR.css";
 
 const Register = () => {
@@ -206,7 +206,7 @@ const Register = () => {
               </button>
             </div>
 
-            <button className="submit-btn" type="submit" disabled={isLoading}>
+            <button className="register-submit-btn" type="submit" disabled={isLoading}>
               {isLoading ? <FaSpinner className="spinner-icon" /> : "Create Account"}
             </button>
           </form>

@@ -5,44 +5,191 @@ const jwt = require("jsonwebtoken");
 // Register User
 const registerUser = async (req, res) => {
   try {
+    // Log the entire request body
+    console.log('Registration request body:', JSON.stringify(req.body, null, 2));
+    
     const { name, email, mobile, mode, password } = req.body;
 
-    if (!name || !email || !mobile || !password) {
-      return res.status(400).json({ error: "❌ All fields are required!" });
+    // Log the extracted data
+    console.log('Extracted registration data:', {
+      name,
+      email,
+      mobile,
+      mode,
+      passwordLength: password ? password.length : 0
+    });
+
+    // Validate required fields
+    const missingFields = [];
+    if (!name) missingFields.push('name');
+    if (!email) missingFields.push('email');
+    if (!mobile) missingFields.push('mobile');
+    if (!password) missingFields.push('password');
+
+    if (missingFields.length > 0) {
+      console.log('Missing required fields:', missingFields);
+      return res.status(400).json({ 
+        error: "All fields are required!", 
+        missingFields 
+      });
     }
 
+    // Validate mode
+    const validModes = ['student', 'educator'];
+    if (mode && !validModes.includes(mode)) {
+      console.log('Invalid mode value:', mode);
+      return res.status(400).json({
+        error: "Invalid mode value",
+        validModes
+      });
+    }
+
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ error: "❌ User already registered!" });
+      console.log('User already exists with email:', email);
+      return res.status(400).json({ error: "User already registered!" });
     }
 
+    // Hash password
+    console.log('Hashing password...');
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, email, mobile, mode, password: hashedPassword });
+    console.log('Password hashed successfully');
 
-    await newUser.save();
-    res.status(201).json({ message: "✅ Registration successful!" });
+    // Create user object
+    const userData = {
+      name,
+      email,
+      mobile,
+      mode: mode || 'student',
+      password: hashedPassword
+    };
+
+    console.log('Creating new user with data:', {
+      ...userData,
+      password: '[HIDDEN]'
+    });
+
+    // Create and validate user instance
+    const newUser = new User(userData);
+    
+    // Validate the user object
+    const validationError = newUser.validateSync();
+    if (validationError) {
+      console.error('Mongoose validation error:', JSON.stringify(validationError, null, 2));
+      return res.status(400).json({ 
+        error: "Validation failed", 
+        details: validationError.errors 
+      });
+    }
+
+    // Save user to database
+    console.log('Attempting to save user to database...');
+    const savedUser = await newUser.save();
+    console.log('User saved successfully with ID:', savedUser._id);
+
+    // Send success response
+    res.status(201).json({ 
+      message: "Registration successful!",
+      userId: savedUser._id 
+    });
+
   } catch (err) {
-    console.error("🚨 Registration Error:", err.message, err.stack); // More detailed error logging
-    res.status(500).json({ error: "❌ Internal Server Error!", details: err.message });
+    // Detailed error logging
+    console.error('Registration Error:', {
+      name: err.name,
+      message: err.message,
+      stack: err.stack,
+      code: err.code,
+      errors: err.errors,
+      keyPattern: err.keyPattern,
+      keyValue: err.keyValue
+    });
+
+    // Handle specific error cases
+    if (err.code === 11000) {
+      return res.status(400).json({ 
+        error: "Email already registered!",
+        field: Object.keys(err.keyPattern)[0]
+      });
+    }
+
+    if (err.name === 'ValidationError') {
+      return res.status(400).json({
+        error: "Validation Error",
+        details: Object.values(err.errors).map(e => e.message)
+      });
+    }
+    
+    // Generic error response
+    res.status(500).json({ 
+      error: "Internal Server Error!", 
+      details: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
   }
 };
 
 // Login User
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
-
   try {
+    console.log('Login attempt:', { email: req.body.email });
+    const { email, password } = req.body;
+
+    // Validate input
+    if (!email || !password) {
+      console.log('Missing login credentials');
+      return res.status(400).json({ 
+        error: "Email and password are required" 
+      });
+    }
+
+    // Find user
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ error: "❌ Invalid credentials" });
+    if (!user) {
+      console.log('User not found:', email);
+      return res.status(400).json({ 
+        error: "No account found with this email" 
+      });
+    }
 
+    // Compare password
+    console.log('Comparing passwords for user:', email);
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ error: "❌ Invalid credentials" });
+    if (!isMatch) {
+      console.log('Invalid password for user:', email);
+      return res.status(400).json({ 
+        error: "Incorrect password" 
+      });
+    }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    // Generate JWT token
+    console.log('Generating token for user:', email);
+    const token = jwt.sign(
+      { userId: user._id }, 
+      process.env.JWT_SECRET, 
+      { expiresIn: "1h" }
+    );
 
-    res.json({ token, user: { id: user._id, name: user.name, email: user.email, mode: user.mode } });
+    console.log('Login successful for user:', email);
+    res.json({ 
+      token, 
+      user: { 
+        id: user._id, 
+        name: user.name, 
+        email: user.email, 
+        mode: user.mode 
+      } 
+    });
   } catch (error) {
-    res.status(500).json({ error: "❌ Server error" });
+    console.error('Login Error:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
+    res.status(500).json({ 
+      error: "Server error during login",
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
 

@@ -2,7 +2,26 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
+    width: 100vw;
     overflow: hidden;
+    position: relative;
+}
+
+.dashboard-container.chat-mode {
+    background: #fff;
+}
+
+.dashboard-container.chat-mode .content-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+
+.dashboard-container.chat-mode .main-content {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: calc(100vh - 64px) !important;
+    background: #fff !important;
 }
 
 .dash-navbar {
@@ -34,6 +53,13 @@
 .nav-profile {
     position: relative;
     margin-left: auto;
+}
+
+.menu-btn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-right: 10px;
 }
 
 .profile-trigger {
@@ -208,17 +234,16 @@
 
 /* Content Area */
 .content-wrapper {
-    display: flex;
     flex: 1;
-    overflow: hidden;
+    padding: 20px;
     margin-top: 64px;
+    overflow-y: auto;
+    background-color: #f9fafb;
 }
 
 .main-content {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    background-color: #f9fafb;
+    height: 100%;
+    width: 100%;
 }
 
 /* Home Section */
@@ -261,17 +286,29 @@
 /* Video Conference Section */
 .video-conference-section {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-conference-section h2 {
+    margin-bottom: 20px;
+    color: #111827;
+    font-size: 30px;
+    font-weight: bold; 
+    margin-top: 30px;
 }
 
 .options-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 50px;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .option-card {
-    background-color: #002b89;
+    background-color: #001e80;
     border-radius: 8px;
     padding: 30px 14px;
     text-align: center;
@@ -318,49 +355,40 @@
 
 /* Study Room Section */
 .study-room-section {
-    padding: 20px;
-    min-height: calc(100vh - 64px);
-    margin-top: 64px;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .study-room-section h2 {
     text-align: center;
-    margin-top: 10px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     font-size: 30px;
     font-weight: bold;
 }
 
-.study-form-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 0 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.study-form-section {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    color: white;
-    padding: 2rem;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.study-form-section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.study-form-section h3 {
+.study-room-section p {
     text-align: center;
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
+    margin-bottom: 50px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.study-room-section button {
+    background-color: #002b89;
     color: white;
-    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+}
+
+.study-room-section button:hover {
+    background-color: #001e80;
 }
 
 .form-group {
@@ -455,7 +483,7 @@
 }
 
 /* Match Video Conference section styles */
-.options-container, .study-form-container {
+.study-form-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
@@ -464,7 +492,7 @@
     margin: 0 auto;
 }
 
-.option-card, .study-form-section {
+.study-form-section {
     background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
     color: white;
     padding: 2rem;
@@ -478,7 +506,7 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.option-card:hover, .study-form-section:hover {
+.study-form-section:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
@@ -519,19 +547,6 @@
     width: 64px;
 }
 
-/* Sidebar Items */
-.sidebar-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.sidebar-item:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
 .sidebar-item .icon {
     min-width: 24px;
     margin-right: 16px;
@@ -564,7 +579,26 @@
 .content-wrapper {
     flex: 1;
     padding: 20px;
-    transition: margin-left 0.3s ease;
+    overflow-y: auto;
+}
+
+.main-content {
+    height: 100%;
+    width: 100%;
+}
+
+/* Section specific styles */
+.home-section {
+    display: flex;
+    gap: 20px;
+}
+
+.home-section-content {
+    flex: 1;
+}
+
+.task-management-panel {
+    width: 300px;
 }
 
 /* Responsive Adjustments */
@@ -581,3 +615,61 @@
         display: flex;
     }
 }
+
+.dashboard-container.chat-mode .sidebar-closed {
+    left: 64px;
+}
+
+.chat-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 100px;
+}
+
+.chat-section-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.chat-section-header h2 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.chat-section-header p {
+    font-size: 16px;
+    font-weight: 500;
+    color: #6b7280;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.chat-section-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.chat-section-content button {
+    background-color: #002b89;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+}
+
+.chat-section-content button:hover {
+    background-color: #001e80;
+}
+
+
+
+
+
+

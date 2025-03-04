@@ -6,26 +6,19 @@ import { CgProfile } from "react-icons/cg";
 import { BiHome, BiBookAlt, BiEdit, BiVideo, BiChat, BiCog, BiCalendar } from "react-icons/bi";
 import { RxLink2 } from "react-icons/rx";
 import './Dashboard.css';
+import logo from '../../assets/CollabRoom logo.png';
 import TaskManagement from '../TaskManagement/TaskManagement';
-import Whiteboard from '../StudyRoom/Whiteboard';
-import JoinCreateRoom from '../StudyRoom/JoinCreateRoom';
-import { v4 as uuidv4 } from 'uuid';
 
 const Dashboard = () => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('Home');
-    const [dropdownOpen, setDropdownOpen] = useState(false);
     const [userData, setUserData] = useState({
         name: '',
         mode: '',
         email: ''
     });
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const profileDropdownRef = useRef(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [user, setUser] = useState(null);
-    const [roomJoined, setRoomJoined] = useState(false);
-    
     const dropdownRef = useRef(null);
 
     useEffect(() => {
@@ -34,28 +27,17 @@ const Dashboard = () => {
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
-                setFilteredResults([]);
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
             }
         };
-        document.addEventListener("mousedown", handleClickOutside);
+
+        document.addEventListener('mousedown', handleClickOutside);
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
 
-    useEffect(() => {
-        // Save dashboard state
-        localStorage.setItem('lastSection', 'dashboard');
-
-        // Cleanup
-        return () => {
-            const currentSection = localStorage.getItem('lastSection');
-            if (currentSection === 'dashboard') {
-                localStorage.removeItem('lastSection');
-            }
-        };
-    }, []);
 
     const fetchUserData = async () => {
         const token = localStorage.getItem('token');
@@ -79,7 +61,9 @@ const Dashboard = () => {
         }
     };
 
-    const handleLogout = async () => {
+    const handleLogout = async (event) => {
+        event.stopPropagation();
+        console.log("Logout button clicked");
         try {
             localStorage.removeItem('token');
             navigate('/login');
@@ -94,6 +78,14 @@ const Dashboard = () => {
 
     const handleTabClick = (tabName) => {
         setActiveTab(tabName);
+    };
+
+    const handleCreateRoom = () => {
+        navigate('/create-room');
+    };
+
+    const handleJoinRoom = () => {
+        navigate('/join-room');
     };
 
     const sidebarItems = [
@@ -115,22 +107,92 @@ const Dashboard = () => {
         return initials || '?';
     };
 
+
+    const renderContent = () => {
+        switch (activeTab) {
+            case 'Home':
+                return (
+                    <div className="home-section">
+                        <div className="home-section-content">
+                            <h2>Welcome to the CollabRoom, {userData.name}...</h2>
+                            <div className="dashboard-info">
+                                <p>This is your personal workspace. Navigate through different sections using the sidebar.</p>
+                            </div>
+                        </div>
+                        <div className="task-management-panel">
+                            <TaskManagement />
+                        </div>
+                    </div>
+                );
+            case 'Study Room':
+                return (
+                    <div className="study-room-section">
+                        <h2>Study Room</h2>
+                        <p>Join a study room or create your own.</p>
+                        <button onClick={() => navigate('/study-room')}>Let's Start</button>
+                    </div>
+                );
+            case 'Video Conferencing':
+                return (
+                    <div className="video-conference-section">
+                        <h2>Video Conference</h2>
+                        <div className="options-container">
+                            <div className="option-card" onClick={() => navigate('/create-meeting')}>
+                                <BiVideo size={38} color='white' />
+                                <h2>Create New Meeting</h2>
+                                <p>Start a new video conference</p>
+                            </div>
+                            <div className="option-card" onClick={() => navigate('/join-meeting')}>
+                                <RxLink2 size={38} color='white' />
+                                <h2>Join via Link</h2>
+                                <p>Join using a meeting link</p>
+                            </div>
+                            <div className="option-card" onClick={() => navigate('/my-meetings')}>
+                                <BiCalendar size={38} color='white' />
+                                <h2>My Meetings</h2>
+                                <p>View your scheduled and past meetings</p>
+                            </div>
+                        </div>
+                    </div>
+                );
+            case 'Chat':
+                return (
+                    <div className="chat-section-wrapper">
+                        <div className="chat-section"> 
+                            <div className="chat-section-header">
+                                <h2>Chat</h2>
+                                <p>Create a new chat room or join an existing one.</p>
+                            </div>
+                            <div className="chat-section-content">
+                                <button onClick={handleCreateRoom}>Create Room</button>
+                                <button onClick={handleJoinRoom}>Join Room</button>
+                            </div>
+                        </div>
+                    </div>
+                );
+            default:
+                return null;
+        }
+    };
+
     return (
-        <div className="dashboard-container">
+        <div className={`dashboard-container`}>
             {/* Navbar */}
             <div className="dash-navbar">
+                <button className='menu-btn' onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+                    <IoMdMenu size={24} />
+                </button>
                 <div className="logo">
-                    <img src="/CollabRoom logo.png" alt="Logo" />
+                    <img src={logo} alt="Logo" />
                 </div>
-
-                <div className="nav-profile">
+                <div className="nav-profile" ref={dropdownRef}>
                     <div
                         className="profile-trigger"
                         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                         ref={dropdownRef}
                     >
                         <div className="profile-circle">
-                            {userData.name?.charAt(0) || '?'}
+                            {getInitials(userData.name)}
                         </div>
                         <div className="profile-details">
                             <div className="profile-name">{userData.name || 'Guest'}</div>
@@ -142,7 +204,7 @@ const Dashboard = () => {
                         <div className="profile-dropdown">
                             <div className="profile-header">
                                 <div className="profile-circle large">
-                                    {userData.name?.charAt(0) || '?'}
+                                    {getInitials(userData.name)}
                                 </div>
                                 <div className="profile-info">
                                     <div className="info-name">{userData.name}</div>
@@ -170,7 +232,7 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            {/* Main Layout with Sidebar and Content Areas */}
+            {/* Main Layout */}
             <div className={`dashboard-layout ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
                 {/* Sidebar */}
                 <div className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
@@ -188,54 +250,7 @@ const Dashboard = () => {
 
                 {/* Main Content Area */}
                 <div className="content-wrapper">
-                    <div className="main-content">
-                        {activeTab === 'Home' && (
-                            <div className="home-section">
-                                <div className="home-section-content">
-                                    <h2>Welcome to the CollabRoom, {userData.name}...</h2>
-                                    {/* Main content goes here */}
-                                    <div className="dashboard-info">
-                                        <p>This is your personal workspace. Navigate through different sections using the sidebar.</p>
-                                    </div>
-                                </div>
-                                {/* Task Management Panel - Fixed on right side */}
-                                <div className="task-management-panel">
-                                    <TaskManagement />
-                                </div>
-                            </div>
-                        )}
-
-                        {activeTab === 'Study Room' && (
-                            <div className="study-room-section" style={{ textAlign: 'center', marginTop: '100px' }}>
-                                <h2>Study Room</h2>
-                                <p style={{ marginBottom: '20px', fontSize: '18px' }}>Join a study room or create your own.</p>
-                                <button onClick={() => navigate('/study-room')} style={{padding: '10px 20px', fontSize: '14px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Let's Start</button>
-                            </div>
-                        )}
-
-                        {activeTab === 'Video Conferencing' && (
-                            <div className="video-conference-section">
-                                <h2 style={{ textAlign: 'center', marginTop: '10px', marginBottom: '50px', fontSize: '30px', fontWeight: 'bold' }}>Video Conference</h2>
-                                <div className="options-container">
-                                    <div className="option-card" onClick={() => navigate('/create-meeting')}>
-                                        <BiVideo size={38} color='white' />
-                                        <h2>Create New Meeting</h2>
-                                        <p>Start a new video conference</p>
-                                    </div>
-                                    <div className="option-card" onClick={() => navigate('/join-meeting')}>
-                                        <RxLink2 size={38} color='white' />
-                                        <h2>Join via Link</h2>
-                                        <p>Join using a meeting link</p>
-                                    </div>
-                                    <div className="option-card" onClick={() => navigate('/my-meetings')}>
-                                        <BiCalendar size={38} color='white' />
-                                        <h2>My Meetings</h2>
-                                        <p>View your scheduled and past meetings</p>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
+                    {renderContent()}
                 </div>
             </div>
         </div>
