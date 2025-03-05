@@ -1,0 +1,202 @@
+:root {
+  --primary: #2962ff;
+  --primary-hover: #0039cb;
+  --surface: #ffffff;
+  --background: #f8f9fa;
+  --border: #e0e0e0;
+  --text-primary: #1a1a1a;
+  --text-secondary: #616161;
+}
+
+.create-doc-container {
+  max-width: 680px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.create-doc-container h1 {
+  color: var(--text-primary);
+  font-size: 2.25rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.5px;
+}
+
+.create-doc-input-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.create-doc-input-label {
+  display: block;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.create-doc-container input[type="text"] {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background: var(--background);
+}
+
+.create-doc-container input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(41, 98, 255, 0.15);
+}
+
+.create-doc-drop-zone {
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  margin: 2rem 0;
+  background: var(--background);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.create-doc-drop-zone:hover {
+  border-color: var(--primary);
+  background: rgba(41, 98, 255, 0.03);
+}
+
+.create-doc-drop-zone.drag-over {
+  border-color: var(--primary);
+  background: rgba(41, 98, 255, 0.05);
+}
+
+.create-doc-drop-zone p {
+  color: var(--text-secondary);
+  margin: 0.75rem 0;
+  font-size: 1rem;
+}
+
+.create-doc-file-input {
+  display: none;
+}
+
+.create-doc-custom-file-input {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.create-doc-custom-file-input:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.create-doc-button {
+  width: 100%;
+  padding: 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.create-doc-button:hover:not(:disabled) {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(41, 98, 255, 0.2);
+}
+
+.create-doc-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Success state */
+.create-doc-success-section {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(46, 125, 50, 0.05);
+  border-radius: 12px;
+  margin-top: 2rem;
+}
+
+.create-doc-link {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.create-doc-copy-button {
+  background: #2e7d32;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .create-doc-container {
+    margin: 1rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .create-doc-container h1 {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .create-doc-drop-zone {
+    padding: 2rem 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .create-doc-button {
+    padding: 0.875rem;
+    font-size: 0.9375rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .create-doc-link {
+    flex-direction: column;
+  }
+  
+  .create-doc-copy-button {
+    width: 100%;
+    padding: 0.75rem;
+  }
+}

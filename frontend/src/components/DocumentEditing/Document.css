@@ -1,0 +1,233 @@
+.create-document-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.new-document-section {
+    margin: 20px 0;
+}
+
+.new-document-section input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.drop-zone {
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    margin: 20px 0;
+    background-color: #f9f9f9;
+}
+
+.drop-zone:hover {
+    border-color: #999;
+    background-color: #f0f0f0;
+}
+
+.create-document-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.create-document-button:hover {
+    background-color: #0056b3;
+}
+
+.document-created-section {
+    text-align: center;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 2rem;
+}
+
+.document-link {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.document-link input {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.document-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.edit-button {
+    background: #1976d2;
+    color: white;
+    padding: 0.8rem 2rem;
+}
+
+.create-new-button {
+    background: #6c757d;
+    color: white;
+    padding: 0.8rem 2rem;
+}
+
+:root {
+  --editor-primary: #2962ff;
+  --editor-surface: #ffffff;
+  --editor-background: #f8f9fa;
+  --editor-border: #e0e0e0;
+  --editor-text-primary: #1a1a1a;
+  --editor-text-secondary: #616161;
+}
+
+/* Editor Container */
+.editor-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--editor-background);
+}
+
+/* Toolbar Enhancements */
+.editor-toolbar {
+  background: var(--editor-surface) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--editor-border);
+}
+
+.toolbar-content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+
+/* Document ID Badge */
+.document-id-badge {
+  background: rgba(41, 98, 255, 0.1);
+  border-radius: 6px;
+  padding: 4px 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.document-id-badge:hover {
+  background: rgba(41, 98, 255, 0.15);
+}
+
+/* Quill Editor Customization */
+.quill-editor {
+  flex: 1;
+  background: var(--editor-surface);
+  border: none !important;
+}
+
+.ql-toolbar {
+  border: none !important;
+  background: var(--editor-background);
+  padding: 12px !important;
+  border-bottom: 1px solid var(--editor-border) !important;
+}
+
+.ql-container {
+  border: none !important;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1rem;
+}
+
+/* User List Drawer */
+.user-list-drawer {
+  width: 280px;
+  padding: 1.5rem;
+}
+
+.user-list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.user-list-item:hover {
+  background: var(--editor-background);
+}
+
+/* Loading States */
+.loading-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: var(--editor-surface);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .toolbar-content {
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+  
+  .document-id-badge {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .ql-toolbar .ql-formats {
+    margin-right: 8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .editor-toolbar {
+    padding: 8px 0;
+  }
+  
+  .ql-toolbar {
+    overflow-x: auto;
+  }
+  
+  .quill-editor {
+    font-size: 0.9375rem;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.editor-content {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Error States */
+.error-state {
+  background: var(--editor-surface);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 2rem auto;
+}

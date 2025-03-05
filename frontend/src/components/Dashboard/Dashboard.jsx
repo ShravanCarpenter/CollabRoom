@@ -88,6 +88,17 @@ const Dashboard = () => {
         navigate('/join-room');
     };
 
+<<<<<<< HEAD
+=======
+    const handleCreateDocumentEditing = () => {
+        navigate('/create-document-editing');
+    };
+
+    const handleJoinDocumentEditing = () => {
+        navigate('/join-document-editing');
+    };
+
+>>>>>>> a775899 (Document Editing Added)
     const sidebarItems = [
         { name: 'Home', icon: <BiHome size={24} /> },
         { name: 'Study Room', icon: <BiBookAlt size={24} /> },
@@ -132,6 +143,22 @@ const Dashboard = () => {
                         <button onClick={() => navigate('/study-room')}>Let's Start</button>
                     </div>
                 );
+<<<<<<< HEAD
+=======
+            case 'Document Editing':
+                return (
+                    <div className="document-editing-section">
+                        <div className="document-editing-section-content">
+                            <h2>Document Editing</h2>
+                            <p>Join a document editing room or create your own.</p>
+                            <div className="document-editing-section-content-buttons">
+                                <button onClick={handleCreateDocumentEditing}>Create Document</button>
+                                <button onClick={handleJoinDocumentEditing}>Join Document</button>
+                            </div>
+                        </div>
+                    </div>
+                );
+>>>>>>> a775899 (Document Editing Added)
             case 'Video Conferencing':
                 return (
                     <div className="video-conference-section">
@@ -158,7 +185,11 @@ const Dashboard = () => {
             case 'Chat':
                 return (
                     <div className="chat-section-wrapper">
+<<<<<<< HEAD
                         <div className="chat-section"> 
+=======
+                        <div className="chat-section">
+>>>>>>> a775899 (Document Editing Added)
                             <div className="chat-section-header">
                                 <h2>Chat</h2>
                                 <p>Create a new chat room or join an existing one.</p>

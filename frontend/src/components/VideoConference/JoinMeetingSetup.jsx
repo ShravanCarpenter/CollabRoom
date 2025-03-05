@@ -94,7 +94,11 @@ const JoinMeetingSetup = () => {
                             required
                         />
                     </div>
+<<<<<<< HEAD
                     <button type='submit' className='submit-btn'>Join Meeting</button>
+=======
+                    <button type='submit' className='join-meeting-submit-btn'>Join Meeting</button>
+>>>>>>> a775899 (Document Editing Added)
                 </form>
                 <p>
                     <a href='/dashboard' style={{color: '#001e80', textDecoration: 'none', fontSize: '14px', marginTop: '10px', marginLeft: '150px'}}>

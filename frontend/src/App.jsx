@@ -19,7 +19,13 @@ import MyMeetings from './components/VideoConference/MyMeetings';
 import NewMeetingSetup from './components/VideoConference/NewMeetingSetup';
 import JoinMeetingSetup from './components/VideoConference/JoinMeetingSetup';
 import ProtectedRoute from './components/ProtectedRoute/';
+<<<<<<< HEAD
 
+=======
+import Editor from './components/DocumentEditing/Editor';
+import CreateDocumentEditing from './components/DocumentEditing/CreateDocumentEditing';
+import JoinDocumentEditing from './components/DocumentEditing/JoinDocumentEditing';
+>>>>>>> a775899 (Document Editing Added)
 import Whiteboard from "./components/StudyRoom/Whiteboard";
 import ChatPage from "./components/ChatRoom/ChatPage";
 import CreateRoom from "./components/ChatRoom/CreateRoom";
@@ -76,6 +82,12 @@ function App() {
                         </Layout>
                     }
                 />
+<<<<<<< HEAD
+=======
+                <Route path="/create-document-editing" element={<CreateDocumentEditing />} />
+                <Route path="/join-document-editing" element={<JoinDocumentEditing />} />
+                <Route path="/editor/:id" element={<Editor />} />
+>>>>>>> a775899 (Document Editing Added)
 
                 <Route path="/create-meeting" element={<NewMeetingSetup />} />
                 <Route path="/create-meeting/:meetingId" element={<CreateMeeting />} />

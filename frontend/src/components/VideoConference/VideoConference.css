@@ -212,7 +212,7 @@
 }
 
 /* Submit Button */
-.submit-btn, .join-submit-btn {
+.meeting-setup-form .submit-btn, .join-meeting-submit-btn {
     width: 100%;
     padding: 14px;
     border: none;
@@ -226,8 +226,11 @@
     margin-top: 1.5rem;
 }
 
-.submit-btn:hover, .join-submit-btn:hover {
+
+.meeting-setup-form .submit-btn:hover, .join-meeting-submit-btn:hover {
     transform: translateY(-2px);
+    background: #032db7;
+    color: white;
     box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
 }
 

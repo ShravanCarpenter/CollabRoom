@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
+=======
+import React, { useEffect, useState, useRef } from "react";
+>>>>>>> a775899 (Document Editing Added)
 import { toast, ToastContainer } from "react-toastify";
 import io from "socket.io-client";
 import ClientRoom from "./ClientRoom";
@@ -22,6 +26,16 @@ const Whiteboard = () => {
   const [roomJoined, setRoomJoined] = useState(false);
   const [user, setUser] = useState({});
   const [users, setUsers] = useState([]);
+<<<<<<< HEAD
+=======
+  const [paths, setPaths] = useState([]);
+  const [currentPath, setCurrentPath] = useState([]);
+  const [brushColor, setBrushColor] = useState("#000000");
+  const [brushSize, setBrushSize] = useState(5);
+  const canvasRef = useRef(null);
+  const contextRef = useRef(null);
+  const isDrawingRef = useRef(false);
+>>>>>>> a775899 (Document Editing Added)
 
   const uuid = () => {
     var S4 = () => {
@@ -45,16 +59,136 @@ const Whiteboard = () => {
 
   useEffect(() => {
     if (roomJoined) {
+<<<<<<< HEAD
       socket.emit("user-joined", user);
     }
   }, [roomJoined]);
 
+=======
+      // Initialize canvas context
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      ctx.lineCap = "round";
+      ctx.strokeStyle = brushColor;
+      ctx.lineWidth = brushSize;
+      contextRef.current = ctx;
+
+      // Socket listeners for whiteboard
+      socket.on("whiteboard-clear", clearWhiteboard);
+      socket.on("whiteboard-draw", handleRemoteDraw);
+      socket.on("whiteboard-state", setPaths);
+
+      return () => {
+        socket.off("whiteboard-clear");
+        socket.off("whiteboard-draw");
+        socket.off("whiteboard-state");
+      };
+    }
+  }, [roomJoined]);
+
+  const handleRemoteDraw = (newPath) => {
+    setPaths(prev => [...prev, newPath]);
+    drawPath(newPath);
+  };
+
+  const drawPath = (path) => {
+    const ctx = contextRef.current;
+    ctx.beginPath();
+    ctx.strokeStyle = path.color;
+    ctx.lineWidth = path.size;
+    
+    path.points.forEach((point, index) => {
+      if (index === 0) ctx.moveTo(point.x, point.y);
+      else ctx.lineTo(point.x, point.y);
+    });
+    
+    ctx.stroke();
+    ctx.closePath();
+  };
+
+  const clearWhiteboard = () => {
+    const ctx = contextRef.current;
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    setPaths([]);
+  };
+
+  const handleDrawStart = (e) => {
+    isDrawingRef.current = true;
+    const { offsetX, offsetY } = getCanvasCoords(e);
+    setCurrentPath([{ x: offsetX, y: offsetY }]);
+  };
+
+  const handleDrawing = (e) => {
+    if (!isDrawingRef.current) return;
+    const { offsetX, offsetY } = getCanvasCoords(e);
+    
+    // Local drawing
+    const ctx = contextRef.current;
+    ctx.lineTo(offsetX, offsetY);
+    ctx.stroke();
+    
+    // Update path
+    setCurrentPath(prev => [...prev, { x: offsetX, y: offsetY }]);
+  };
+
+  const handleDrawEnd = () => {
+    if (!isDrawingRef.current) return;
+    isDrawingRef.current = false;
+    
+    // Send path to server
+    const newPath = {
+      points: currentPath,
+      color: brushColor,
+      size: brushSize
+    };
+    
+    socket.emit("whiteboard-draw", newPath);
+    setPaths(prev => [...prev, newPath]);
+    setCurrentPath([]);
+  };
+
+  const getCanvasCoords = (e) => {
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    return {
+      offsetX: e.clientX - rect.left,
+      offsetY: e.clientY - rect.top
+    };
+  };
+
+>>>>>>> a775899 (Document Editing Added)
   return (
     <div className="home">
       <ToastContainer />
       {roomJoined ? (
         <>
+<<<<<<< HEAD
           <Sidebar users={users} user={user} socket={socket} />
+=======
+          <Sidebar 
+            users={users} 
+            user={user} 
+            socket={socket}
+            onClear={() => {
+              clearWhiteboard();
+              socket.emit("whiteboard-clear");
+            }}
+            brushColor={brushColor}
+            setBrushColor={setBrushColor}
+            brushSize={brushSize}
+            setBrushSize={setBrushSize}
+          />
+          
+          <canvas
+            ref={canvasRef}
+            onMouseDown={handleDrawStart}
+            onMouseMove={handleDrawing}
+            onMouseUp={handleDrawEnd}
+            onMouseLeave={handleDrawEnd}
+            className="whiteboard-canvas"
+          />
+          
+>>>>>>> a775899 (Document Editing Added)
           {user.presenter ? (
             <Room
               userNo={userNo}
@@ -83,4 +217,8 @@ const Whiteboard = () => {
     </div>
   );
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> a775899 (Document Editing Added)
 export default Whiteboard;
