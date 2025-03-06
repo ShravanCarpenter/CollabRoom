@@ -50,66 +50,71 @@ const JoinCreateRoom = ({ uuid, setUser, setRoomJoined }) => {
   };
 
   return (
-    <div className="options-container">
-      <div className="option-card">
-        <h2>Create Room</h2>
-        <p>Create a new room and invite others to join</p>
-        <form onSubmit={handleCreateSubmit} className="room-form">
-          <input
-            type="text"
-            placeholder="Enter your name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <div className="room-id-container">
+    <>
+      <div className="options-container">
+        <div className="option-card">
+          <h2>Create Room</h2>
+          <p>Create a new room and invite others to join</p>
+          <form onSubmit={handleCreateSubmit} className="room-form">
             <input
               type="text"
-              value={roomId}
-              readOnly
+              placeholder="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
-            <button
-              type="button"
-              onClick={() => setRoomId(uuid())}
-            >
-              <BiRefresh size={20} />
-            </button>
-            <CopyToClipboard
-              text={roomId}
-              onCopy={() => toast.success("Room Id Copied!")}
-            >
-              <button type="button">
-                <BiCopy size={20} />
+            <div className="room-id-container">
+              <input
+                type="text"
+                value={roomId}
+                readOnly
+              />
+              <button
+                type="button"
+                onClick={() => setRoomId(uuid())}
+              >
+                <BiRefresh size={20} />
               </button>
-            </CopyToClipboard>
-          </div>
-          <button type="submit" className="submit-btn">
-            Create Room
-          </button>
-        </form>
-      </div>
+              <CopyToClipboard
+                text={roomId}
+                onCopy={() => toast.success("Room Id Copied!")}
+              >
+                <button type="button">
+                  <BiCopy size={20} />
+                </button>
+              </CopyToClipboard>
+            </div>
+            <button type="submit" className="room-submit-btn">
+              Create Room
+            </button>
+          </form>
+        </div>
 
-      <div className="option-card">
-        <h2>Join Room</h2>
-        <p>Join an existing room using a room ID</p>
-        <form onSubmit={handleJoinSubmit} className="room-form">
-          <input
-            type="text"
-            placeholder="Enter your name"
-            value={joinName}
-            onChange={(e) => setJoinName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Enter room ID"
-            value={joinRoomId}
-            onChange={(e) => setJoinRoomId(e.target.value)}
-          />
-          <button type="submit" className="submit-btn">
-            Join Room
-          </button>
-        </form>
+        <div className="option-card">
+          <h2>Join Room</h2>
+          <p>Join an existing room using a room ID</p>
+          <form onSubmit={handleJoinSubmit} className="room-form">
+            <input
+              type="text"
+              placeholder="Enter your name"
+              value={joinName}
+              onChange={(e) => setJoinName(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Enter room ID"
+              value={joinRoomId}
+              onChange={(e) => setJoinRoomId(e.target.value)}
+            />
+            <button type="submit" className="room-submit-btn">
+              Join Room
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+      <p>
+        <a href="/dashboard" className="back-to-dashboard">Back to Dashboard</a>
+      </p>
+    </>
   );
 };
 

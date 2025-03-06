@@ -1,10 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 
-<<<<<<< HEAD
-const AuthContext = createContext(null);
-=======
 export const AuthContext = createContext(null);
->>>>>>> a775899 (Document Editing Added)
 
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState(() => {

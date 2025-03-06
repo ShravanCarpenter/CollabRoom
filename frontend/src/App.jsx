@@ -19,13 +19,9 @@ import MyMeetings from './components/VideoConference/MyMeetings';
 import NewMeetingSetup from './components/VideoConference/NewMeetingSetup';
 import JoinMeetingSetup from './components/VideoConference/JoinMeetingSetup';
 import ProtectedRoute from './components/ProtectedRoute/';
-<<<<<<< HEAD
-
-=======
 import Editor from './components/DocumentEditing/Editor';
 import CreateDocumentEditing from './components/DocumentEditing/CreateDocumentEditing';
 import JoinDocumentEditing from './components/DocumentEditing/JoinDocumentEditing';
->>>>>>> a775899 (Document Editing Added)
 import Whiteboard from "./components/StudyRoom/Whiteboard";
 import ChatPage from "./components/ChatRoom/ChatPage";
 import CreateRoom from "./components/ChatRoom/CreateRoom";
@@ -34,73 +30,70 @@ import "./App.css";
 
 function App() {
     return (
-            <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route
-                    path="/dashboard"
-                    element={
-                        <ProtectedRoute>
-                            <Dashboard />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/whiteboard"
-                    element={
-                        <ProtectedRoute>
-                            <Whiteboard />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/profile/update"
-                    element={
-                        <ProtectedRoute>
-                            <ProfileUpdate />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/update-password"
-                    element={
-                        <ProtectedRoute>
-                            <UpdatePassword />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="/"
-                    element={
-                        <Layout>
-                            <Header />
-                            <Hero />
-                            <Features />
-                            <AboutUs />
-                            <ContactUs />
-                            <Footer />
-                        </Layout>
-                    }
-                />
-<<<<<<< HEAD
-=======
-                <Route path="/create-document-editing" element={<CreateDocumentEditing />} />
-                <Route path="/join-document-editing" element={<JoinDocumentEditing />} />
-                <Route path="/editor/:id" element={<Editor />} />
->>>>>>> a775899 (Document Editing Added)
+        <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route
+                path="/dashboard"
+                element={
+                    <ProtectedRoute>
+                        <Dashboard />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/whiteboard"
+                element={
+                    <ProtectedRoute>
+                        <Whiteboard />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/profile/update"
+                element={
+                    <ProtectedRoute>
+                        <ProfileUpdate />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/update-password"
+                element={
+                    <ProtectedRoute>
+                        <UpdatePassword />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/"
+                element={
+                    <Layout>
+                        <Header />
+                        <Hero />
+                        <Features />
+                        <AboutUs />
+                        <ContactUs />
+                        <Footer />
+                    </Layout>
+                }
+            />
+            <Route path="/create-document-editing" element={<CreateDocumentEditing />} />
+            <Route path="/join-document-editing" element={<JoinDocumentEditing />} />
+            <Route path="/editor/:id" element={<Editor />} />
 
-                <Route path="/create-meeting" element={<NewMeetingSetup />} />
-                <Route path="/create-meeting/:meetingId" element={<CreateMeeting />} />
-                <Route path="/join-meeting" element={<JoinMeetingSetup />} />
-                <Route path="/join-meeting/:meetingId" element={<JoinMeeting />} />
-                <Route path="/my-meetings" element={<MyMeetings />} />
+            <Route path="/create-meeting" element={<NewMeetingSetup />} />
+            <Route path="/create-meeting/:meetingId" element={<CreateMeeting />} />
+            <Route path="/join-meeting" element={<JoinMeetingSetup />} />
+            <Route path="/join-meeting/:meetingId" element={<JoinMeeting />} />
+            <Route path="/my-meetings" element={<MyMeetings />} />
 
-                <Route path="/study-room" element={<Whiteboard />} />
-                <Route path="/create-room" element={<CreateRoom />} />
-                <Route path="/join-room" element={<JoinRoom />} />
+            <Route path="/study-room" element={<Whiteboard />} />
+            <Route path="/create-room" element={<CreateRoom />} />
+            <Route path="/join-room" element={<JoinRoom />} />
 
-                <Route path="/chat/:roomId" element={<ChatPage />} />
-            </Routes>
+            <Route path="/chat/:roomId" element={<ChatPage />} />
+        </Routes>
     );
 }
 

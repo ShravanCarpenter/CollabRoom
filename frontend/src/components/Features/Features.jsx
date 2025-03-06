@@ -2,31 +2,46 @@ import React from 'react';
 import './Features.css'; // Importing CSS for features section
 
 const Features = () => {
+    const features = [
+        {
+            icon: "/edit.gif",
+            title: "Real Time Document Editing",
+            description: "Collaborate on documents simultaneously with live updates and version control."
+        },
+        {
+            icon: "/studyRoom.gif",
+            title: "Study Rooms",
+            description: "Create dedicated virtual spaces for different subjects or projects."
+        },
+        {
+            icon: "/realTimeMessaging.gif",
+            title: "Real-Time Messaging",
+            description: "Integrated chat with markdown support and file sharing capabilities."
+        },
+        {
+            icon: "/videoConferencing.gif",
+            title: "Video Conferencing",
+            description: "HD video calls with screen sharing and collaborative whiteboards."
+        }
+    ];
+
     return (
         <section id='features' className="features">
             <div className="container">
                 <h2>Key Features of CollabRoom</h2>
                 <div className="features-list">
-                    <div className="feature-item">
-                        <img src="/edit.gif" alt="Real Time Document Editing" />
-                        <h3>Real Time Document Editing</h3>
-                        <p>Create and edit documents with your fellow mates anywhere in real time.</p>
-                    </div>
-                    <div className="feature-item">
-                        <img src="/studyRoom.gif" alt="Study Room" />
-                        <h3>Study Rooms</h3>
-                        <p>Create and join virtual study rooms for focused learning sessions.</p>
-                    </div>
-                    <div className="feature-item">
-                        <img src="/realTimeMessaging.gif" alt="Real-Time Messaging" />
-                        <h3>Real-Time Messaging</h3>
-                        <p>Communicate instantly with study group members to collaborate effectively.</p>
-                    </div>
-                    <div className="feature-item">
-                        <img src='/videoConferencing.gif' alt='Video Conferencing Image' />
-                        <h3>Video Conferencing</h3>
-                        <p>Host virtual study sessions with real-time video and face-to-face interaction.</p>
-                    </div>
+                    {features.map((feature, index) => (
+                        <div 
+                            key={index}
+                            className="feature-item"
+                            data-aos="fade-up"
+                            data-aos-delay={(index + 1) * 100}
+                        >
+                            <img src={feature.icon} alt={feature.title} />
+                            <h3>{feature.title}</h3>
+                            <p>{feature.description}</p>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>

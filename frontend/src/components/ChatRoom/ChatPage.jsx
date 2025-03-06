@@ -5,30 +5,17 @@ import io from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
 import './ChatPage.css';
 
-<<<<<<< HEAD
-const socket = io('http://localhost:3000');
-
-const ChatPage = () => {
-    const navigate = useNavigate();
-    const { roomId } = useParams();
-=======
 const SOCKET_URL = 'http://localhost:3000';
 const API_URL = 'http://localhost:3000/api';
 
 const ChatPage = () => {
     // 1. State hooks (always first)
->>>>>>> a775899 (Document Editing Added)
     const [messages, setMessages] = useState([]);
     const [participants, setParticipants] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const [username, setUsername] = useState(null);
     const [userId, setUserId] = useState(null);
     const [loading, setLoading] = useState(true);
-<<<<<<< HEAD
-    const messagesEndRef = useRef(null);
-
-    // Fetch logged-in user's info from MongoDB
-=======
     const [connectionStatus, setConnectionStatus] = useState('disconnected');
 
     // 2. Refs (after state hooks)
@@ -40,7 +27,6 @@ const ChatPage = () => {
     const { roomId } = useParams();
 
     // 4. Effects (in order of execution)
->>>>>>> a775899 (Document Editing Added)
     useEffect(() => {
         const fetchUser = async () => {
             try {
@@ -69,10 +55,6 @@ const ChatPage = () => {
         fetchUser();
     }, []);
 
-<<<<<<< HEAD
-    // Extract unique participants from message history
-=======
->>>>>>> a775899 (Document Editing Added)
     useEffect(() => {
         if (messages.length > 0 && userId) {
             // Extract unique participants from messages
@@ -100,50 +82,6 @@ const ChatPage = () => {
     }, [messages, userId]);
 
     useEffect(() => {
-<<<<<<< HEAD
-        // Fetch messages from MongoDB
-        setLoading(true);
-        axios.get(`http://localhost:3000/api/chat/message/${roomId}`)
-            .then((response) => {
-                setMessages(response.data);
-                setLoading(false);
-                scrollToBottom();
-            })
-            .catch((err) => {
-                console.error('Failed to fetch messages:', err);
-                setLoading(false);
-            });
-
-        // Join the chat room
-        socket.emit('joinRoom', roomId);
-
-        // Listen for new messages
-        socket.on('receiveMessage', (message) => {
-            setMessages((prevMessages) => [...prevMessages, message]);
-
-            // Add new participant if not already in list
-            if (message.senderId !== userId) {
-                setParticipants(prev => {
-                    if (!prev.some(p => p._id === message.senderId)) {
-                        return [...prev, {
-                            _id: message.senderId,
-                            name: message.senderName,
-                            status: 'online'
-                        }];
-                    }
-                    return prev;
-                });
-            }
-        });
-
-        return () => {
-            socket.off('receiveMessage');
-            socket.emit('leaveRoom', roomId);
-        };
-    }, [roomId, userId]);
-
-    // Scroll to the latest message
-=======
         // Initialize socket with proper room handling
         const token = localStorage.getItem('token');
         socket.current = io(SOCKET_URL, {
@@ -206,7 +144,6 @@ const ChatPage = () => {
         };
     }, [roomId]);
 
->>>>>>> a775899 (Document Editing Added)
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
@@ -217,24 +154,6 @@ const ChatPage = () => {
 
     const handleSendMessage = async (e) => {
         e.preventDefault();
-<<<<<<< HEAD
-        if (!newMessage.trim() || !userId) return;
-
-        const messageData = {
-            roomId,
-            name,
-            senderId: userId,
-            senderName: username,
-            text: newMessage
-        };
-
-        try {
-            const response = await axios.post('http://localhost:3000/api/chat/message/send', messageData, { withCredentials: true });
-            socket.emit('sendMessage', response.data);
-            setNewMessage('');
-        } catch (error) {
-            console.error('Failed to send message:', error);
-=======
         if (!newMessage.trim() || !socket.current) return;
 
         try {
@@ -266,7 +185,6 @@ const ChatPage = () => {
             // Rollback optimistic update
             setMessages(prev => prev.filter(msg => msg._id !== Date.now().toString()));
             alert('Failed to send message. Please try again.');
->>>>>>> a775899 (Document Editing Added)
         }
     };
 
@@ -277,12 +195,6 @@ const ChatPage = () => {
     };
 
     const handleLeaveRoom = () => {
-<<<<<<< HEAD
-        socket.emit('leaveRoom', roomId);
-        navigate('/dashboard');
-    };
-
-=======
         if (socket.current) {
             socket.current.emit('leaveRoom', roomId);
         }
@@ -294,13 +206,12 @@ const ChatPage = () => {
         return <div className="error-message">Authentication required...</div>;
     }
 
->>>>>>> a775899 (Document Editing Added)
     return (
         <div className="chat-page">
             <div className="chat-container">
                 <div className="chat-header">
                     <div className="chat-header-left">
-                        <h1>Chat Room: {name}</h1>
+                        <h1>Chat Room: {roomId}</h1>
                         <h2>Room ID: {roomId}</h2>
                     </div>
                     <button className="leave-button" onClick={handleLeaveRoom}>Leave Room</button>

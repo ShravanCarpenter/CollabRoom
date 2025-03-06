@@ -93,7 +93,7 @@
     background: rgba(255, 255, 255, 0.3);
 }
 
-.submit-btn {
+.room-submit-btn {
     width: 100%;
     padding: 0.75rem;
     border: none;
@@ -107,7 +107,7 @@
     margin-top: 0.5rem;
 }
 
-.submit-btn:hover {
+.room-submit-btn:hover {
     background: rgba(255, 255, 255, 0.3);
 }
 
@@ -117,3 +117,13 @@
         padding: 0 1rem;
     }
 } 
+
+.back-to-dashboard {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    margin-top: 1rem;
+    margin-left: 43rem;
+    font-size: 16px;
+}

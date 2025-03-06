@@ -27,11 +27,11 @@ const Footer = () => {
 
         <div className="footer-right">
           <h4>Follow Us</h4>
-          <div className="social-icons">
-            <a href="#" className="social-icon"><img src="/facebook.svg" alt="Facebook" /></a>
-            <a href="#" className="social-icon"><img src="/twitter.svg" alt="Twitter" /></a>
-            <a href="#" className="social-icon"><img src="/instagram.svg" alt="Instagram" /></a>
-            <a href="#" className="social-icon"><img src="/linkedin.svg" alt="LinkedIn" /></a>
+          <div className="footer-social-icons">
+            <a href="#" className="footer-social-icon"><img src="/facebook.svg" alt="Facebook" /></a>
+            <a href="#" className="footer-social-icon"><img src="/twitter.svg" alt="Twitter" /></a>
+            <a href="#" className="footer-social-icon"><img src="/instagram.svg" alt="Instagram" /></a>
+            <a href="#" className="footer-social-icon"><img src="/linkedin.svg" alt="LinkedIn" /></a>
           </div>
         </div>
       </div>

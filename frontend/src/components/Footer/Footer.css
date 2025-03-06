@@ -1,6 +1,15 @@
+:root {
+    --footer-ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --footer-transition: all 0.3s var(--footer-ease);
+    --footer-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --footer-accent: #2563eb;
+    --footer-hover-accent: #1d4ed8;
+    --footer-background: #ffffff;
+}
+
 .footer {
-    background: linear-gradient(135deg, #c9e9ff, #fefefe);
-    color: #000;
+    background-color: var(--footer-background);
+    color: var(--footer-accent);
     padding: 40px 0;
     font-family: "Poppins", sans-serif;
     width: auto;
@@ -65,28 +74,28 @@
 }
 
 .footer-center a:hover {
-    color: rgb(33, 33, 255);
+    color: var(--footer-hover-accent);
 }
 
-.social-icons {
+.footer-social-icons {
     display: flex;
-    gap: 7px;
+    gap: 20px;
     margin-left: 50px;
 }
 
-.social-icon img {
+.footer-social-icon img {
     width: 30px;
     height: 30px;
     transition: transform 0.3s;
 }
 
-.social-icon:hover img {
+.footer-social-icon:hover img {
     transform: scale(1.1);
 }
 
 .footer-bottom {
-    background-color: #000;
-    color: #fff;
+    background-color: var(--footer-accent);
+    color: var(--footer-background);
     width: 105vw;
     padding: 1rem 0;
     margin-bottom: -50px;
@@ -124,7 +133,7 @@
         margin: 8px 0;
     }
 
-    .social-icons {
+    .footer-social-icons {
         justify-content: center;
         margin-top: 15px;
     }

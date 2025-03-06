@@ -1,18 +1,18 @@
 import React from 'react';
 import logo from '../../assets/CollabRoom logo.png';
-import "../Header/Header.css";
+import "./Header.css";
 
 const Header = () => {
   return (
-    <nav className="navbar-part">
-      <img className="navbar-logo" src={logo} alt='logo' width={160}/>
+    <nav className="header-navbar-part">
+      <img className="header-navbar-logo" src={logo} alt='logo' width={160}/>
 
-      <ul className="navbar-links">
+      <ul className="header-navbar-links">
         <li><a href="#hero">Home</a></li>
         <li><a href="#features">Features</a></li>
         <li><a href="#about-us">About</a></li>
         <li><a href="#contact-us">Contact</a></li>
-        
+
         <li><a href="/login" className="btn-1">LogIn</a></li>
         <li><a href="/register" className="btn">SignUp For Free</a></li>
       </ul>
@@ -27,7 +27,7 @@ const Header = () => {
 };
 
 const toggleMenu = () => {
-  const links = document.querySelector(".navbar-links");
+  const links = document.querySelector(".header-navbar-links");
   links.classList.toggle("active");
 };
 

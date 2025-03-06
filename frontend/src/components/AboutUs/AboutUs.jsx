@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './AboutUs.css'; // Import the CSS file for styling
 
 const AboutUs = () => {
+  const [isVisionHovered, setIsVisionHovered] = useState(false);
+  const [isMissionHovered, setIsMissionHovered] = useState(false);
+
   return (
     <section id='about-us' className="vision-mission">
       <h1 className="page-title">Our Vision & Mission</h1>
-      <div className="vision-section">
-        {/* Vision Card */}
-        <div className="vision-card">
+      
+      <div className="vision-section" 
+           onMouseEnter={() => setIsVisionHovered(true)}
+           onMouseLeave={() => setIsVisionHovered(false)}>
+        <div className={`vision-card ${isVisionHovered ? 'hovered' : ''}`}>
           <h2>Our Vision</h2>
           <p>
             To create a world where collaborative learning and access to
@@ -15,17 +20,18 @@ const AboutUs = () => {
             and contribute to a better tomorrow.
           </p>
         </div>
-        {/* Vision Image */}
         <div className="vision-image">
-          <img src="/vision.jpg" alt="Vision" />
+          <img src="/vision.jpg" alt="Vision illustration" />
         </div>
       </div>
 
-      <div className="mission-section">
+      <div className="mission-section" 
+           onMouseEnter={() => setIsMissionHovered(true)}
+           onMouseLeave={() => setIsMissionHovered(false)}>
         <div className="mission-image">
-          <img src="/mission.jpg" alt="Mission" />
+          <img src="/mission.jpg" alt="Mission illustration" />
         </div>
-        <div className="mission-card">
+        <div className={`mission-card ${isMissionHovered ? 'hovered' : ''}`}>
           <h2>Our Mission</h2>
           <p>
             To provide an inclusive platform that fosters knowledge-sharing,
