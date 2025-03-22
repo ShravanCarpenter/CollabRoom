@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './VideoConference.css';
-import logo from '../../assets/CollabRoom logo.png';
+import logo from '../../Assets/CollabRoom logo.png';
 
 const NewMeetingSetup = () => {
     const navigate = useNavigate();

@@ -4,7 +4,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { io } from 'socket.io-client';
 import mammoth from 'mammoth';
-import logo from '../../assets/CollabRoom logo.png';
+import logo from '../../Assets/CollabRoom logo.png';
 import './Document.css';
 
 import { 

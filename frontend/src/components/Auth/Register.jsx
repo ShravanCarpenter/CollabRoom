@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from 'react-router-dom';
 import { FaSpinner, FaEye, FaEyeSlash } from "react-icons/fa";
-import logo from '../../assets/CollabRoom logo.png';
+import logo from '../../Assets/CollabRoom logo.png';
 import "./LR.css";
 
 const Register = () => {

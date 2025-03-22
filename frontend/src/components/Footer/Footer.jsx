@@ -1,6 +1,6 @@
 import React from 'react';
 import './Footer.css';
-import logo from '../../assets/CollabRoom Logo.png';
+import logo from '../../Assets/CollabRoom Logo.png';
 
 const Footer = () => {
   return (

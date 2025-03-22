@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaSpinner, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthContext';
-import logo from '../../assets/CollabRoom logo.png';
+import logo from '../../Assets/CollabRoom logo.png';
 import './LR.css';
 
 const Login = () => {

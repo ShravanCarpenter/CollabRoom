@@ -6,7 +6,7 @@ import { CgProfile } from "react-icons/cg";
 import { BiHome, BiBookAlt, BiEdit, BiVideo, BiChat, BiCog, BiCalendar } from "react-icons/bi";
 import { RxLink2 } from "react-icons/rx";
 import './Dashboard.css';
-import logo from '../../assets/CollabRoom logo.png';
+import logo from '../../Assets/CollabRoom logo.png';
 import TaskManagement from '../TaskManagement/TaskManagement';
 
 const Dashboard = () => {
