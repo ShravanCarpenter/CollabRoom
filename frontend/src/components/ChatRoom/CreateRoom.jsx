@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { BiCopy } from 'react-icons/bi';
 import './ChatRoom.css';
-import logo from '../../Assets/CollabRoom logo.png';
+import logo from '../../../public/Assets/CollabRoom logo.png';
 
 const CreateRoom = () => {
     const [roomName, setRoomName] = useState('');

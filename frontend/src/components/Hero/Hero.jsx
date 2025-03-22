@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../Hero/Hero.css";
-import collab1 from '../../Assets/pic1.jpg';
-import collab2 from '../../Assets/pic2.jpg';
-import collab3 from '../../Assets/pic3.jpg';
-import collab4 from '../../Assets/pic4.jpg';
-import collab5 from '../../Assets/pic5.jpg';
-import collab6 from '../../Assets/pic6.jpg';
+import collab1 from '../../../public/Assets/pic1.jpg';
+import collab2 from '../../../public/Assets/pic2.jpg';
+import collab3 from '../../../public/Assets/pic3.jpg';
+import collab4 from '../../../public/Assets/pic4.jpg';
+import collab5 from '../../../public/Assets/pic5.jpg';
+import collab6 from '../../../public/Assets/pic6.jpg';
 
 const collaborationImages = [
   collab1,

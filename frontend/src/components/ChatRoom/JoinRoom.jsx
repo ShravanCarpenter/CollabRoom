@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import logo from '../../Assets/CollabRoom logo.png';
+import logo from '../../../public/Assets/CollabRoom logo.png';
 import './ChatRoom.css';
 
 const JoinRoom = () => {

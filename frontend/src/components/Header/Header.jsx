@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../Assets/CollabRoom logo.png';
+import logo from '../../../public/Assets/CollabRoom logo.png';
 import "./Header.css";
 
 const Header = () => {
